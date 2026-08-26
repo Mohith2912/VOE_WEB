@@ -1,109 +1,74 @@
-/* =========================
-   CINEMATIC GLOBAL BRANDING
-========================= */
+/* ==========================================================================
+   ULTIMATE VOE + EEC DUAL FUSION & ENERGETIC DISMANTLE/RECOMBINATION SYSTEM
+   ========================================================================== */
 
-/* The inline stable state container inside the Navbar */
-.branding-inline-container {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  position: relative;
-  /* Navbar has height 80px, padding 0 40px */
-}
-
-/* Stable VOE Button matching original Navbar styles */
-.navbar-logo-btn {
-  font-size: 30px;
-  font-weight: 800;
-  letter-spacing: 4px;
-  color: #b026ff;
-  background: transparent;
-  border: none;
-  padding: 0;
-  margin: 0;
-  cursor: pointer;
-  text-decoration: none;
-  text-shadow: 0 0 5px #b026ff, 0 0 15px #b026ff, 0 0 30px #8a2be2;
-  transition: 0.3s ease;
-  line-height: 1;
-}
-
-.navbar-logo-btn:hover {
-  transform: scale(1.05);
-  text-shadow: 0 0 8px #b026ff, 0 0 20px #b026ff, 0 0 35px #8a2be2;
-}
-
-/* Stable EEC Logo positioning */
-.eec-inline-logo {
-  position: absolute;
-  top: 100%; /* Directly below VOE text */
-  left: 0;
-  width: 250px;
-  height: auto;
-  object-fit: contain;
-  margin-top: 10px;
-  opacity: 0.9;
-  filter: drop-shadow(0 0 2px rgba(255,255,255,0.2));
-  transition: opacity 0.3s;
-}
-
-/* Mobile responsive sizing for EEC logo inline */
-@media (max-width: 768px) {
-  .eec-inline-logo {
-    width: 180px;
-  }
-}
-
-@media (max-width: 480px) {
-  .eec-inline-logo {
-    width: 140px;
-  }
-}
-
-/* =========================================================
-   CINEMATIC OVERLAY & ANIMATION CLASSES
-========================================================= */
-
-.cinematic-overlay {
+.global-cinematic-overlay {
   position: fixed;
   inset: 0;
-  z-index: 10000;
-  pointer-events: none; /* Let clicks pass if needed, though usually blocks until done */
-  perspective: 1200px;
+  z-index: 99999;
+  pointer-events: none;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
+  perspective: 2000px;
+  background: radial-gradient(circle at 75% 50%, rgba(92, 25, 150, 0.45), transparent 45%),
+              radial-gradient(circle at 25% 50%, rgba(12, 103, 159, 0.35), transparent 60%),
+              #030008;
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  isolation: isolate;
 }
 
-/* The camera layer allows us to push/pull the entire scene */
-.cinematic-camera {
+.global-cinematic-overlay.fade-out {
+  opacity: 0;
+}
+
+/* Atmospheric Expanding Rings */
+.cinematic-atmosphere {
   position: absolute;
+  z-index: 1;
+  inset: -20%;
+  background: repeating-radial-gradient(
+    circle at center,
+    transparent 0 6vmin,
+    rgba(139, 219, 255, 0.09) 6.2vmin 6.4vmin,
+    transparent 6.6vmin 12vmin
+  );
+  opacity: 0.7;
+  animation: masterAtmosphere 6s ease-out infinite;
+}
+
+@keyframes masterAtmosphere {
+  0% { transform: scale(0.7); opacity: 0.2; }
+  50% { transform: scale(1.1); opacity: 0.8; }
+  100% { transform: scale(1.45); opacity: 0; }
+}
+
+/* Particle Canvas Layer */
+.cinematic-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* 3D Camera Stage */
+.cinematic-camera-stage {
+  position: relative;
+  z-index: 5;
   width: 100vw;
   height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   transform-style: preserve-3d;
+  will-change: transform;
 }
 
-.cinematic-bg {
-  position: absolute;
-  inset: -20vw; /* Bleed edge for camera shake */
-  background: radial-gradient(circle at center, rgba(10, 10, 20, 0.95) 0%, rgba(2, 2, 5, 1) 100%);
-  z-index: -1;
-}
-
-.atmospheric-haze {
-  position: absolute;
-  inset: -20vw;
-  background: radial-gradient(circle at center, rgba(176, 38, 255, 0.08) 0%, transparent 70%);
-  opacity: 0;
-  transition: opacity 2s ease;
-}
-.atmospheric-haze.active { opacity: 1; }
-
-.orbit-center {
+/* Central Orbit Hub */
+.cinematic-orbit-hub {
   position: absolute;
   width: 0;
   height: 0;
@@ -113,136 +78,257 @@
   transform-style: preserve-3d;
 }
 
-/* 
-  Since the original VOE logo was a text button in Navbar, 
-  and the user requested fragmentation of the "VOE logo image", 
-  I will use the text element styled identically to the image if needed,
-  or just use the image asset `voe-logo.jpeg` for the animation and swap to text.
-  Wait, the user said "The uploaded EEC asset... The existing VOE logo". 
-  I will use the `voe-logo.jpeg` for the 3D cinematic.
-*/
-.anim-logo-wrapper {
+/* 3D Animated Nodes */
+.cinematic-node {
   position: absolute;
   display: flex;
   align-items: center;
   justify-content: center;
   transform-style: preserve-3d;
-  will-change: transform, opacity;
+  will-change: transform, opacity, filter;
 }
 
-.voe-cinematic-img {
-  width: 140px;
-  height: auto;
+/* VOE Emblem Image */
+.cinematic-voe-img {
+  width: 240px;
+  height: 240px;
   border-radius: 50%;
-  box-shadow: 0 0 0px rgba(176, 38, 255, 0);
-  /* The base image is hidden during fragmentation */
+  object-fit: contain;
+  filter: drop-shadow(0 0 35px rgba(193, 92, 255, 0.95)) drop-shadow(0 0 70px rgba(0, 229, 255, 0.6));
+  will-change: transform, filter;
+  pointer-events: none;
 }
 
-.eec-cinematic-img {
-  width: 250px;
+/* EEC Institutional Logo Card */
+.cinematic-eec-card {
+  width: 320px;
+  max-width: 85vw;
+  padding: 10px 18px;
+  background: rgba(255, 255, 255, 0.98);
+  border-radius: 12px;
+  box-shadow:
+    0 0 35px rgba(0, 229, 255, 0.8),
+    0 0 65px rgba(176, 38, 255, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-origin: center center;
+  will-change: transform, filter;
+  pointer-events: none;
+}
+
+.cinematic-eec-img {
+  width: 100%;
   height: auto;
   object-fit: contain;
-  box-shadow: 0 0 0px rgba(255, 100, 50, 0);
+  display: block;
 }
 
-@media (max-width: 768px) {
-  .eec-cinematic-img { width: 180px; }
-}
-@media (max-width: 480px) {
-  .eec-cinematic-img { width: 140px; }
-}
+/* ==========================================================================
+   ULTIMATE ENERGETIC ELEMENTAL AURAS (FIRE + WATER + ELECTRICITY + SHOCKWAVES)
+   ========================================================================== */
 
-/* =========================================================
-   FRAGMENTATION GRID SYSTEM
-========================================================= */
-
-.fragmentation-container {
+.voe-elemental-aura-stage {
   position: absolute;
-  width: 140px;
-  height: 140px;
-  display: grid;
-  pointer-events: none;
+  width: min(85vw, 560px);
+  aspect-ratio: 1;
   transform-style: preserve-3d;
-}
-
-.logo-fragment {
-  width: 100%;
-  height: 100%;
-  background-image: url('../voe-logo.jpeg');
-  background-size: 140px 140px;
-  background-repeat: no-repeat;
-  border-radius: 2px; /* Slight rounding for pieces */
-  will-change: transform, opacity;
-}
-
-/* =========================================================
-   PARTICLES & EFFECTS
-========================================================= */
-
-.particles-layer {
-  position: absolute;
-  inset: 0;
   pointer-events: none;
-  z-index: 9998;
+  z-index: 4;
 }
 
-/* CSS Shockwave */
-.shockwave {
+/* 1. Super-Energetic Fire Conic Aura */
+.voe-elemental-fire {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0);
-  width: 100px;
-  height: 100px;
+  inset: -6%;
   border-radius: 50%;
-  border: 4px solid rgba(255, 255, 255, 0.8);
-  box-shadow: 0 0 40px #fff, inset 0 0 40px #fff;
+  -webkit-mask: radial-gradient(circle, transparent 50%, #000 55% 72%, transparent 76%);
+  mask: radial-gradient(circle, transparent 50%, #000 55% 72%, transparent 76%);
+  background: conic-gradient(
+    from 12deg,
+    transparent 0deg 15deg,
+    rgba(255, 68, 14, 0.35) 20deg,
+    #ff4515 45deg,
+    #ffe27d 58deg,
+    rgba(255, 68, 14, 0.95) 82deg,
+    transparent 115deg 160deg,
+    #ff6a1c 190deg,
+    #fff099 210deg,
+    transparent 240deg 295deg,
+    rgba(255, 63, 18, 1) 330deg,
+    transparent 360deg
+  );
+  filter: blur(10px) drop-shadow(0 0 35px rgba(255, 80, 22, 1)) drop-shadow(0 0 60px rgba(255, 140, 0, 0.8));
+  animation: masterFireSpin 3.8s ease-in-out infinite;
+}
+
+@keyframes masterFireSpin {
+  0% { transform: rotate(-45deg) scale(0.85); opacity: 0.7; }
+  50% { transform: rotate(335deg) scale(1.2); opacity: 1; filter: blur(12px) brightness(1.3); }
+  100% { transform: rotate(660deg) scale(0.85); opacity: 0.7; }
+}
+
+/* 2. Super-Energetic Water Conic Aura */
+.voe-elemental-water {
+  position: absolute;
+  inset: 2%;
+  border-radius: 50%;
+  -webkit-mask: radial-gradient(circle, transparent 50%, #000 55% 72%, transparent 76%);
+  mask: radial-gradient(circle, transparent 50%, #000 55% 72%, transparent 76%);
+  background: conic-gradient(
+    from 198deg,
+    transparent 0deg 25deg,
+    rgba(61, 221, 255, 0.35) 34deg,
+    #37dbff 65deg,
+    #e8fcff 82deg,
+    rgba(34, 129, 255, 0.95) 110deg,
+    transparent 140deg 200deg,
+    #40e5ff 235deg,
+    #ffffff 255deg,
+    transparent 290deg 330deg,
+    rgba(37, 174, 255, 0.9) 350deg
+  );
+  filter: blur(8px) drop-shadow(0 0 30px rgba(59, 218, 255, 1)) drop-shadow(0 0 60px rgba(0, 160, 255, 0.75));
+  animation: masterWaterSpin 3.8s ease-in-out infinite;
+}
+
+@keyframes masterWaterSpin {
+  0% { transform: rotate(38deg) scale(0.85); opacity: 0.7; }
+  50% { transform: rotate(-326deg) scale(1.2); opacity: 1; filter: blur(10px) brightness(1.3); }
+  100% { transform: rotate(-644deg) scale(0.85); opacity: 0.7; }
+}
+
+/* 3. High-Voltage Electricity Shield & Branching Polygon */
+.voe-elemental-electricity {
+  position: absolute;
+  inset: 8%;
+  border: 3.5px dashed rgba(220, 250, 255, 1);
+  border-radius: 50%;
+  box-shadow:
+    0 0 25px #00e5ff,
+    0 0 60px #5080ff,
+    inset 0 0 25px rgba(127, 235, 255, 0.9);
+  animation: masterElectricityPulse 0.9s steps(4, end) infinite;
+}
+
+.voe-elemental-electricity::before,
+.voe-elemental-electricity::after {
+  content: "";
+  position: absolute;
+  inset: -12%;
+  border: 3.5px solid rgba(230, 255, 255, 0.95);
+  border-radius: 44% 56% 51% 49%;
+  clip-path: polygon(0 43%, 19% 39%, 25% 24%, 39% 35%, 51% 9%, 62% 40%, 84% 32%, 100% 48%, 82% 59%, 72% 82%, 59% 63%, 42% 93%, 33% 61%, 9% 68%);
+}
+
+.voe-elemental-electricity::after {
+  opacity: 0.85;
+  transform: rotate(58deg) scale(0.9);
+}
+
+@keyframes masterElectricityPulse {
+  0% { transform: scale(0.88) rotate(-14deg); opacity: 0.5; }
+  50% { transform: scale(1.18) rotate(14deg); opacity: 1; }
+  100% { transform: scale(0.88) rotate(-14deg); opacity: 0.5; }
+}
+
+/* 4. Multi-Layer Shockwave Blast */
+.voe-elemental-shock {
+  position: absolute;
+  width: 160px;
+  height: 160px;
+  border: 6px solid rgba(230, 255, 255, 1);
+  border-radius: 50%;
+  box-shadow:
+    0 0 35px rgba(126, 234, 255, 1),
+    0 0 90px rgba(176, 38, 255, 0.9),
+    inset 0 0 35px rgba(255, 255, 255, 1);
+  pointer-events: none;
   opacity: 0;
+  z-index: 10;
+}
+
+.voe-elemental-shock.active {
+  animation: masterShockAnimation 1.1s cubic-bezier(0.08, 0.65, 0.24, 1) forwards;
+}
+
+@keyframes masterShockAnimation {
+  0% { transform: scale(0.15); opacity: 1; border-width: 22px; }
+  60% { opacity: 0.9; border-width: 8px; }
+  100% { transform: scale(14); opacity: 0; border-width: 1px; }
+}
+
+/* ==========================================================================
+   ICONIC HIGH-ENERGY DISMANTLE & RECOMBINATION 3D FRAGMENTS
+   ========================================================================== */
+
+.voe-dismantle-stage {
+  position: absolute;
+  width: 240px;
+  height: 240px;
+  transform-style: preserve-3d;
   pointer-events: none;
 }
 
-.shockwave.fire {
-  animation: shockwave-expand 0.5s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+.voe-dismantle-tile {
+  position: absolute;
+  width: 20%;
+  height: 20%;
+  background-repeat: no-repeat;
+  background-size: 500% 500%;
+  will-change: transform, opacity, filter;
+  border-radius: 2px;
 }
 
-@keyframes shockwave-expand {
-  0% { transform: translate(-50%, -50%) scale(0); opacity: 1; border-width: 20px; }
-  100% { transform: translate(-50%, -50%) scale(15); opacity: 0; border-width: 1px; }
-}
-
-/* White Hot Flash */
-.white-hot-flash {
+/* Flash Overlay */
+.cinematic-flash-overlay {
   position: absolute;
   inset: 0;
-  background: #fff;
-  opacity: 0;
-  z-index: 10001;
+  background: #ffffff;
+  z-index: 25;
   pointer-events: none;
+  opacity: 0;
 }
 
-/* SVG Lightning Container */
-.lightning-container {
+/* Final Light Sweep */
+.cinematic-light-sweep {
   position: absolute;
   inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 15%,
+    rgba(255, 255, 255, 0.9) 48%,
+    rgba(0, 229, 255, 0.8) 54%,
+    rgba(176, 38, 255, 0.8) 58%,
+    transparent 75%
+  );
+  z-index: 30;
   pointer-events: none;
-  z-index: 9999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  opacity: 0;
+  transform: translateX(-100%);
 }
 
-.lightning-path {
-  fill: none;
-  stroke: #a0c0ff;
-  stroke-width: 2;
-  filter: drop-shadow(0 0 6px #5080ff);
-  stroke-dasharray: 1000;
-  stroke-dashoffset: 1000;
-  animation: lightning-strike 0.3s ease-out forwards;
+.cinematic-light-sweep.animate-sweep {
+  animation: masterLightSweep 0.75s ease-out forwards;
 }
 
-@keyframes lightning-strike {
-  0% { stroke-dashoffset: 1000; opacity: 1; }
-  50% { stroke-dashoffset: 0; opacity: 1; stroke-width: 4; }
-  100% { stroke-dashoffset: 0; opacity: 0; }
+@keyframes masterLightSweep {
+  0% { transform: translateX(-100%); opacity: 1; }
+  100% { transform: translateX(100%); opacity: 0; }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .cinematic-voe-img,
+  .voe-dismantle-stage {
+    width: 160px;
+    height: 160px;
+  }
+  .cinematic-eec-card {
+    width: 220px;
+    padding: 6px 12px;
+  }
+  .voe-elemental-aura-stage {
+    width: min(90vw, 360px);
+  }
 }

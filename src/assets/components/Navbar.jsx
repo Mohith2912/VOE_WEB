@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./Navbar.css";
 import eecLogo from "../eec-logo.png";
+import VOEContinuousLogo from "./VOEContinuousLogo.jsx";
 
 function Navbar({ setActivePage }) {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -36,19 +37,16 @@ function Navbar({ setActivePage }) {
           <span></span>
         </button>
 
-        <button
-          className="navbar-logo"
-          onClick={() => handleNavigation("home")}
-        >
-          VOE
-        </button>
+        <div className="navbar-brand-group">
+          <VOEContinuousLogo onClick={() => handleNavigation("home")} />
 
-        <img
-          src={eecLogo}
-          alt="Easwari Engineering College"
-          className="navbar-eec-logo"
-          onClick={() => handleNavigation("home")}
-        />
+          <img
+            src={eecLogo}
+            alt="Easwari Engineering College"
+            className="navbar-eec-logo"
+            onClick={() => handleNavigation("home")}
+          />
+        </div>
 
       </nav>
 

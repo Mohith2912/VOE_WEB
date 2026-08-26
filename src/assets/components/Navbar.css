@@ -378,11 +378,17 @@
 
 
 /* =========================
-   EEC LOGO (GLOBAL BRANDING)
+   GLOBAL BRANDING GROUP
 ========================= */
 
+.navbar-brand-group {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
 .navbar-eec-logo {
-  height: 52px;
+  height: 48px;
   width: auto;
   max-width: 220px;
   object-fit: contain;
