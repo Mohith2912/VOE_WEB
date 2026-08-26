@@ -1,282 +1,357 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { motion, useAnimation } from "framer-motion";
 import Particles from "react-tsparticles";
 import { loadSlim } from "tsparticles-slim";
+import { createPortal } from "react-dom";
 import "./GlobalLogos.css";
 
-import voeLogo from "../voe-logo.jpeg";
-// Since you haven't manually saved the .png yet, I'm switching this back to the SVG placeholder so the app doesn't crash.
-// Please manually save the image you attached as eec-logo.png in the src/assets folder, then change this import.
-import eecLogo from "../eec-logo.svg";
+import voeLogoImg from "../voe-logo.jpeg";
+// Fallback import. User must place eec-logo.jpeg!
+import eecLogoImg from "../eec-logo.jpeg";
 
-// Simple sleep helper
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-function GlobalLogos() {
-  const [isCinematic, setIsCinematic] = useState(true);
-  const [showParticles, setShowParticles] = useState(false);
-  const [particleConfig, setParticleConfig] = useState("burst"); // "burst" or "converge"
-  const [showSweep, setShowSweep] = useState(false);
+function GlobalLogos({ onLogoClick }) {
+  const inlineContainerRef = useRef(null);
+  
+  // State management
+  const [hasPlayed, setHasPlayed] = useState(true); // Default true to prevent flash
+  const [isCinematic, setIsCinematic] = useState(false);
+  const [reducedMotion, setReducedMotion] = useState(false);
+  
+  // Effects State
+  const [particlesMode, setParticlesMode] = useState("none"); // none, burst, converge
+  const [showShockwave, setShowShockwave] = useState(false);
+  const [showFlash, setShowFlash] = useState(false);
+  const [showFragments, setShowFragments] = useState(false);
+  const [lightningActive, setLightningActive] = useState(false);
   const [hazeActive, setHazeActive] = useState(false);
-  const [voeOpacity, setVoeOpacity] = useState(1);
-  const [isReducedMotion, setIsReducedMotion] = useState(false);
 
-  // Framer Motion controls
+  // Layout calculations
+  const [eecTargetRect, setEecTargetRect] = useState(null);
+  const [voeTargetRect, setVoeTargetRect] = useState(null);
+
+  // Grid Fragmentation Config
+  const isMobile = window.innerWidth <= 768;
+  const gridRows = isMobile ? 6 : 8;
+  const gridCols = isMobile ? 6 : 8;
+  const fragments = Array.from({ length: gridRows * gridCols }, (_, i) => ({
+    id: i,
+    row: Math.floor(i / gridCols),
+    col: i % gridCols,
+  }));
+
+  // Controls
+  const cameraControls = useAnimation();
   const orbitControls = useAnimation();
   const voeControls = useAnimation();
   const eecControls = useAnimation();
   const bgControls = useAnimation();
+  const fragmentControls = useAnimation();
+  const flashControls = useAnimation();
 
-  // Initialize tsparticles
   const particlesInit = useCallback(async (engine) => {
     await loadSlim(engine);
   }, []);
 
+  // Initialization & Check
   useEffect(() => {
-    // Check for reduced motion
-    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (mediaQuery.matches) {
-      setIsReducedMotion(true);
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    setReducedMotion(prefersReduced);
+
+    // Using sessionStorage to only play once per tab lifecycle
+    const played = sessionStorage.getItem("voe_intro_played");
+    
+    if (prefersReduced || played === "true") {
+      setHasPlayed(true);
       setIsCinematic(false);
-      return;
+    } else {
+      setHasPlayed(false);
+      setIsCinematic(true);
+    }
+  }, []);
+
+  // The Main Cinematic Sequence
+  useEffect(() => {
+    if (!isCinematic) return;
+    
+    // We need target coordinates from the DOM to animate INTO them seamlessly
+    if (inlineContainerRef.current) {
+      const rect = inlineContainerRef.current.getBoundingClientRect();
+      // Estimate inline button size (VOE text) and EEC logo size
+      // The container starts at rect.left, rect.top
+      setVoeTargetRect({ x: rect.left + 35, y: rect.top + 15, scale: 0.8 }); // Approximations based on Navbar
+      setEecTargetRect({ x: rect.left + 125, y: rect.top + 50, scale: 0.8 }); 
     }
 
-    const runCinematicSequence = async () => {
-      // Setup initial states
-      voeControls.set({ x: -80, y: 0, scale: 0, opacity: 0, rotateY: -30, z: -100 });
-      eecControls.set({ x: 80, y: 0, scale: 0, opacity: 0, rotateY: 30, z: -100 });
-      orbitControls.set({ rotate: 0, rotateX: 20 }); // Slight tilt for 3D orbit
-      bgControls.set({ opacity: 1 });
-      setHazeActive(true);
+    let isMounted = true;
 
-      // 0.0–0.8 sec: Dual-logo appearance (depth, volumetric lighting illusion via shadow)
-      voeControls.start({
-        scale: 1, opacity: 1, rotateY: 0, z: 0,
-        boxShadow: "0 0 30px rgba(176, 38, 255, 0.4)",
-        transition: { duration: 0.8, ease: "easeOut" }
-      });
-      eecControls.start({
-        scale: 1, opacity: 1, rotateY: 0, z: 0,
-        boxShadow: "0 0 30px rgba(255, 100, 50, 0.4)",
-        transition: { duration: 0.8, ease: "easeOut" }
-      });
-      await sleep(800);
+    const runSequence = async () => {
+      const delay = async (ms) => {
+        await sleep(ms);
+        if (!isMounted) throw new Error("Aborted");
+      };
 
-      // 0.8–2.2 sec: VOE + EEC orbital revolution
-      // We rotate the parent container, and counter-rotate the children to keep them upright
-      orbitControls.start({
-        rotate: 360,
-        transition: { duration: 1.4, ease: "easeInOut" }
-      });
-      // Counter-rotate children to stay facing camera while orbiting
-      voeControls.start({ rotate: -360, transition: { duration: 1.4, ease: "easeInOut" } });
-      eecControls.start({ rotate: -360, transition: { duration: 1.4, ease: "easeInOut" } });
-      await sleep(1400);
+      try {
+        // 1. Initial State
+        voeControls.set({ x: -100, y: 0, scale: 0.1, opacity: 0, rotateY: -20, filter: "blur(10px)" });
+        eecControls.set({ x: 100, y: 0, scale: 0.1, opacity: 0, rotateY: 20, filter: "blur(10px)" });
+        orbitControls.set({ rotate: 0, rotateX: 15 });
+        bgControls.set({ opacity: 1 });
+        cameraControls.set({ scale: 1, z: 0 });
+        setHazeActive(true);
+        setShowFragments(false);
 
-      // 2.2–2.8 sec: Synchronized logo interaction (pulse)
-      voeControls.start({ scale: [1, 1.15, 1], transition: { duration: 0.6 } });
-      eecControls.start({ scale: [1, 1.15, 1], transition: { duration: 0.6 } });
-      await sleep(600);
+        await delay(100);
 
-      // 2.8–3.8 sec: EEC separates and moves to its final position
-      // Calculate target screen position based on window size
-      const targetX = -(window.innerWidth / 2) + 95; // roughly 20px left + 75px center of 150px container
-      const eecTargetY = 80; 
+        // 0.0 - 0.7: DUAL LOGO MATERIALIZATION
+        voeControls.start({
+          scale: 1, opacity: 1, rotateY: 0, filter: "blur(0px)",
+          boxShadow: "0 0 40px rgba(176, 38, 255, 0.4)",
+          transition: { duration: 0.7, ease: "easeOut" }
+        });
+        eecControls.start({
+          scale: 1, opacity: 1, rotateY: 0, filter: "blur(0px)",
+          boxShadow: "0 0 40px rgba(255, 100, 50, 0.4)",
+          transition: { duration: 0.7, ease: "easeOut" }
+        });
+        await delay(700);
 
-      eecControls.start({
-        x: targetX,
-        y: eecTargetY,
-        z: 0,
-        scale: 0.8, // shrink to fit final layout
-        boxShadow: "0 0 0px rgba(255, 100, 50, 0)", // remove glow
-        transition: { duration: 1.0, ease: [0.4, 0.0, 0.2, 1] } // curved/smooth easing
-      });
-      
-      // Move VOE to center zero to prepare for solo showcase
-      voeControls.start({ x: 0, y: 0, transition: { duration: 1.0, ease: "easeInOut" } });
-      await sleep(1000);
+        // 0.7 - 2.0: 3D ORBIT
+        orbitControls.start({ rotate: 360, transition: { duration: 1.3, ease: "easeInOut" } });
+        voeControls.start({ rotate: -360, z: [0, 50, 0, -50, 0], transition: { duration: 1.3, ease: "easeInOut" } });
+        eecControls.start({ rotate: -360, z: [0, -50, 0, 50, 0], transition: { duration: 1.3, ease: "easeInOut" } });
+        await delay(1300);
 
-      // 3.8–4.5 sec: VOE camera push-in
-      voeControls.start({
-        scale: 1.5,
-        boxShadow: "0 0 50px rgba(176, 38, 255, 0.6)",
-        transition: { duration: 0.7, ease: "easeOut" }
-      });
-      await sleep(700);
+        // 2.0 - 2.6: SYNCHRONIZE
+        voeControls.start({ scale: 1.15, transition: { duration: 0.3, yoyo: 1 } });
+        eecControls.start({ scale: 1.15, transition: { duration: 0.3, yoyo: 1 } });
+        await delay(600);
 
-      // 4.5–5.5 sec: VOE 360° rotation (Y-axis)
-      voeControls.start({
-        rotateY: 360,
-        transition: { duration: 1.0, ease: "easeInOut" }
-      });
-      await sleep(1000);
+        // 2.6 - 3.6: EEC SEPARATION (Moves to calculated layout position)
+        const centerX = window.innerWidth / 2;
+        const centerY = window.innerHeight / 2;
+        const eecTx = eecTargetRect ? eecTargetRect.x - centerX : -centerX + 150;
+        const eecTy = eecTargetRect ? eecTargetRect.y - centerY : -centerY + 100;
 
-      // 5.5–6.2 sec: Energy build-up
-      // Simulating camera shake and intense glow
-      voeControls.start({
-        x: [0, -2, 2, -1, 1, 0],
-        y: [0, 1, -1, 2, -2, 0],
-        boxShadow: "0 0 80px rgba(176, 38, 255, 1)",
-        transition: { duration: 0.7, repeat: 1 }
-      });
-      await sleep(700);
+        eecControls.start({
+          x: eecTx, y: eecTy, scale: 0.8, rotate: 0,
+          boxShadow: "0 0 0px rgba(255,100,50,0)",
+          transition: { duration: 1.0, ease: [0.4, 0, 0.2, 1] }
+        });
+        
+        voeControls.start({ x: 0, y: 0, scale: 1.2, transition: { duration: 1.0, ease: "easeInOut" } });
+        await delay(1000);
 
-      // 6.2–6.8 sec: VOE fragmentation (show particles, hide logo)
-      setVoeOpacity(0); // Hide the actual logo
-      setParticleConfig("burst");
-      setShowParticles(true); // Fire the burst particles
-      await sleep(600);
+        // 3.6 - 4.2: VOE CAMERA FOCUS
+        cameraControls.start({ scale: 1.4, transition: { duration: 0.6, ease: "easeOut" } });
+        await delay(600);
 
-      // 6.8–7.6 sec: Fire + water energy effect (let particles travel)
-      // The burst particles inherently have fire/water colors configured below.
-      await sleep(800);
+        // 4.2 - 5.3: VOE 360 ROTATION
+        voeControls.start({ rotateY: 360, rotateX: 10, transition: { duration: 1.1, ease: "easeInOut" } });
+        await delay(1100);
 
-      // 7.6–8.5 sec: Particle convergence
-      // Switch particle config to pull them back in
-      setParticleConfig("converge");
-      await sleep(900);
+        // 5.3 - 6.0: ELECTRICAL CHARGE
+        setLightningActive(true);
+        voeControls.start({
+          x: [-2, 2, -1, 3, -3, 0],
+          y: [1, -2, 2, -1, 1, 0],
+          boxShadow: "0 0 80px rgba(176, 38, 255, 1)",
+          transition: { duration: 0.7, repeat: Infinity, repeatType: "mirror" }
+        });
+        await delay(700);
 
-      // 8.5–9.3 sec: VOE reconstruction (show logo, hide particles)
-      setShowParticles(false);
-      setVoeOpacity(1); // Show logo again
-      voeControls.set({ rotateY: 0 }); // reset rotation
-      voeControls.start({
-        scale: [0.5, 1.2, 1], // pop in
-        boxShadow: "0 0 20px rgba(176, 38, 255, 0.4)",
-        transition: { duration: 0.8, ease: "easeOut" }
-      });
-      await sleep(800);
+        // 6.0 - 6.5: OVERLOAD (Flash)
+        flashControls.start({ opacity: [0, 0.8, 0], transition: { duration: 0.5 } });
+        await delay(500);
 
-      // 9.3–10.0 sec: Final light sweep and transition to stable website state
-      setShowSweep(true);
-      
-      // Move VOE to final top-left position
-      const voeTargetY = -80;
-      voeControls.start({
-        x: targetX,
-        y: voeTargetY,
-        scale: 0.8,
-        boxShadow: "0 0 0px rgba(176, 38, 255, 0)",
-        transition: { duration: 0.7, ease: "easeInOut" }
-      });
-      
-      // Fade out background
-      bgControls.start({ opacity: 0, transition: { duration: 0.7 } });
-      setHazeActive(false);
+        // 6.5 - 7.2: FRAGMENTATION & SHOCKWAVE
+        setShowShockwave(true);
+        setShowFragments(true);
+        setLightningActive(false);
+        setParticlesMode("burst");
+        cameraControls.start({ scale: 1.0, transition: { duration: 0.5, ease: "easeOut" } });
+        
+        voeControls.stop();
+        voeControls.set({ opacity: 0 }); 
 
-      await sleep(700);
+        fragmentControls.start((i) => {
+          const angle = Math.random() * Math.PI * 2;
+          const radius = 150 + Math.random() * 200;
+          const tx = Math.cos(angle) * radius;
+          const ty = Math.sin(angle) * radius;
+          const tz = (Math.random() - 0.5) * 300;
+          const rotX = Math.random() * 720;
+          const rotY = Math.random() * 720;
 
-      // End cinematic mode, snap to CSS layout
-      setIsCinematic(false);
+          return {
+            x: tx, y: ty, z: tz, rotateX: rotX, rotateY: rotY,
+            opacity: [1, 0.8],
+            transition: { duration: 0.7, ease: "easeOut" }
+          };
+        });
+        await delay(700);
+
+        // 7.2 - 8.3: FIRE + WATER EXPLOSION
+        await delay(1100);
+
+        // 8.3 - 8.8: CENTRAL ENERGY CORE (Reverse particles)
+        setParticlesMode("converge");
+        await delay(500);
+
+        // 8.8 - 9.8: RECONSTRUCTION
+        fragmentControls.start({
+          x: 0, y: 0, z: 0, rotateX: 0, rotateY: 0, opacity: 1,
+          transition: { duration: 1.0, ease: "easeInOut" }
+        });
+        await delay(900);
+
+        // 9.8 - 10.3: FINAL SNAP
+        setShowShockwave(false);
+        setParticlesMode("none");
+        setShowFragments(false);
+        voeControls.set({ opacity: 1, x: 0, y: 0, rotateX: 0, rotateY: 0, boxShadow: "0 0 20px rgba(176,38,255,0.5)" });
+        
+        flashControls.start({ opacity: [0, 1, 0], transition: { duration: 0.3 } });
+        await delay(300);
+
+        // 10.3 - 11.0: LIGHT SWEEP & SNAP TO DOM
+        const voeTx = voeTargetRect ? voeTargetRect.x - centerX : -centerX + 50;
+        const voeTy = voeTargetRect ? voeTargetRect.y - centerY : -centerY + 30;
+
+        voeControls.start({
+          x: voeTx, y: voeTy, scale: 0.3,
+          boxShadow: "0 0 0px rgba(176,38,255,0)",
+          transition: { duration: 0.7, ease: "easeInOut" }
+        });
+        bgControls.start({ opacity: 0, transition: { duration: 0.7 } });
+        setHazeActive(false);
+
+        await delay(700);
+
+        // Mark complete
+        sessionStorage.setItem("voe_intro_played", "true");
+        setIsCinematic(false);
+      } catch (error) {
+        // Animation aborted due to unmount or strict mode remount
+        console.log("Animation sequence aborted");
+      }
     };
 
-    runCinematicSequence();
-  }, [orbitControls, voeControls, eecControls, bgControls]);
+    runSequence();
 
-  // Particle configuration for Burst (Fire & Water)
-  const getParticleOptions = () => {
-    const isBurst = particleConfig === "burst";
+    return () => { isMounted = false; };
+  }, [isCinematic, orbitControls, voeControls, eecControls, bgControls, cameraControls, fragmentControls, flashControls, eecTargetRect, voeTargetRect]);
+
+
+  // Config for TS Particles
+  const getParticleConfig = () => {
+    if (particlesMode === "none") return { particles: { number: { value: 0 } } };
+    
+    const isBurst = particlesMode === "burst";
     return {
-      fullScreen: { enable: false, zIndex: 9999 },
+      fullScreen: { enable: false, zIndex: -1 },
       fpsLimit: 60,
       particles: {
-        number: {
-          value: isBurst ? 250 : 150,
-          density: { enable: true, value_area: 800 }
-        },
-        color: {
-          value: ["#ff4500", "#1e90ff", "#ff8c00", "#00bfff"] // Fire and Water
-        },
-        shape: {
-          type: ["circle", "triangle", "polygon"]
-        },
-        opacity: {
-          value: 0.9,
-          random: true,
-          anim: { enable: true, speed: 1, opacity_min: 0.1, sync: false }
-        },
-        size: {
-          value: isBurst ? 6 : 4,
-          random: true,
-          anim: { enable: true, speed: 4, size_min: 0.1, sync: false }
-        },
+        number: { value: isBurst ? (isMobile ? 150 : 300) : 100 },
+        color: { value: ["#ff4500", "#1e90ff", "#00ffff", "#ff0000"] },
+        shape: { type: ["circle", "triangle"] },
+        opacity: { value: 0.8, random: true, anim: { enable: true, speed: 2, opacity_min: 0.1 } },
+        size: { value: 5, random: true, anim: { enable: true, speed: 5, size_min: 0.1 } },
         move: {
           enable: true,
-          speed: isBurst ? 20 : 10,
-          direction: isBurst ? "none" : "none", // Will use attract to pull back
+          speed: isBurst ? 25 : 8,
+          direction: "none",
           random: true,
           straight: false,
           outModes: { default: isBurst ? "out" : "bounce" },
-          // The converge phase uses an attractor at the center
-          attract: { 
-            enable: !isBurst, 
-            rotateX: 600, 
-            rotateY: 1200 
-          }
+          attract: { enable: !isBurst, rotateX: 600, rotateY: 1200 }
         }
       },
-      interactivity: {
-        detectsOn: "canvas",
-        events: { resize: true }
-      },
-      // When converging, add an absorber at the center to suck particles in
-      absorbers: !isBurst ? [{
-        color: "#000000",
-        opacity: 0,
-        position: { x: 50, y: 50 },
-        size: { value: 20, limit: 100 }
-      }] : [],
+      interactivity: { detectsOn: "canvas", events: { resize: true } },
+      absorbers: !isBurst ? [{ color: "#000", opacity: 0, position: { x: 50, y: 50 }, size: { value: 10, limit: 50 } }] : [],
       detectRetina: true
     };
   };
 
-  // If user prefers reduced motion or animation is over, just render the final static container
-  if (isReducedMotion || !isCinematic) {
-    return (
-      <div className="global-logos-container">
-        <div className="logo-wrapper" style={{ position: 'relative', margin: 0, top: 'auto', left: 'auto', width: '120px', height: '120px' }}>
-          <img src={voeLogo} alt="VOE Logo" className="voe-logo" style={{ width: '100%', height: 'auto' }} />
-        </div>
-        <div className="logo-wrapper" style={{ position: 'relative', margin: 0, top: 'auto', left: 'auto', width: '120px', height: '120px' }}>
-          <img src={eecLogo} alt="EEC Logo" className="eec-logo" style={{ width: '100%', height: 'auto' }} />
-        </div>
-      </div>
-    );
-  }
-
-  // Cinematic Intro Render
-  return (
+  // Render Portal for Cinematic Overlay so it breaks out of Navbar
+  const cinematicPortal = isCinematic && typeof document !== "undefined" ? createPortal(
     <div className="cinematic-overlay">
       <motion.div className="cinematic-bg" animate={bgControls} />
-      <div className={`atmospheric-haze ${hazeActive ? 'active' : ''}`}></div>
+      <div className={`atmospheric-haze ${hazeActive ? 'active' : ''}`} />
+      
+      <motion.div className="white-hot-flash" animate={flashControls} />
+      
+      {showShockwave && <div className="shockwave fire" />}
 
-      {showParticles && (
-        <div className="particles-container">
-          <Particles 
-            id="tsparticles" 
-            init={particlesInit} 
-            options={getParticleOptions()} 
-          />
+      {particlesMode !== "none" && (
+        <div className="particles-layer">
+          <Particles id="tsparticles" init={particlesInit} options={getParticleConfig()} />
         </div>
       )}
 
-      {/* Orbit center wrapper */}
-      <motion.div className="orbit-center" animate={orbitControls}>
-        
-        {/* VOE Logo */}
-        <motion.div className="logo-wrapper" animate={voeControls} style={{ opacity: voeOpacity }}>
-          <div className={`light-sweep-container ${showSweep ? 'sweep' : ''}`}>
-             <img src={voeLogo} alt="VOE Logo" className="voe-logo" />
-          </div>
-        </motion.div>
+      {lightningActive && (
+        <div className="lightning-container">
+          <svg width="400" height="400" viewBox="0 0 400 400">
+             {/* Simple procedural-looking lightning paths */}
+             <path className="lightning-path" d="M200,100 L220,150 L180,180 L230,220 L190,260 L210,300" />
+             <path className="lightning-path" d="M100,200 L150,180 L180,220 L220,190 L260,210 L300,200" style={{ animationDelay: '0.1s' }}/>
+          </svg>
+        </div>
+      )}
 
-        {/* EEC Logo */}
-        <motion.div className="logo-wrapper" animate={eecControls}>
-          <img src={eecLogo} alt="EEC Logo" className="eec-logo" />
-        </motion.div>
+      <motion.div className="cinematic-camera" animate={cameraControls}>
+        <motion.div className="orbit-center" animate={orbitControls}>
+          
+          <motion.div className="anim-logo-wrapper" animate={voeControls}>
+             {!showFragments && <img src={voeLogoImg} alt="VOE" className="voe-cinematic-img" />}
+             
+             {showFragments && (
+                <div className="fragmentation-container" style={{ gridTemplateColumns: `repeat(${gridCols}, 1fr)`, gridTemplateRows: `repeat(${gridRows}, 1fr)` }}>
+                  {fragments.map((f, i) => (
+                    <motion.div
+                      key={f.id}
+                      custom={i}
+                      animate={fragmentControls}
+                      className="logo-fragment"
+                      style={{
+                        backgroundPosition: `${(f.col / (gridCols - 1)) * 100}% ${(f.row / (gridRows - 1)) * 100}%`,
+                        backgroundSize: `${gridCols * 100}% ${gridRows * 100}%`
+                      }}
+                    />
+                  ))}
+                </div>
+             )}
+          </motion.div>
 
+          <motion.div className="anim-logo-wrapper" animate={eecControls}>
+             <img src={eecLogoImg} alt="EEC" className="eec-cinematic-img" />
+          </motion.div>
+
+        </motion.div>
       </motion.div>
-    </div>
+    </div>,
+    document.body
+  ) : null;
+
+  // Render Inline Static Component for standard layout
+  return (
+    <>
+      {cinematicPortal}
+      <div className="branding-inline-container" ref={inlineContainerRef}>
+        <button className="navbar-logo-btn" onClick={onLogoClick}>
+          VOE
+        </button>
+        {/* We keep the EEC logo mounted but hide it visually if cinematic is running 
+            to prevent layout shifts, although cinematic overlay covers everything anyway. */}
+        <img 
+          src={eecLogoImg} 
+          alt="Easwari Engineering College" 
+          className="eec-inline-logo" 
+          style={{ opacity: isCinematic ? 0 : 0.9 }}
+        />
+      </div>
+    </>
   );
 }
 

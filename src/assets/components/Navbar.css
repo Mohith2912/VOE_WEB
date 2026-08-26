@@ -81,16 +81,42 @@
 
 
 /* =========================
-   NAVBAR BRANDING
+   VOE LOGO
 ========================= */
 
-.navbar-branding-container {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  margin-left: 10px;
+.navbar-logo {
+  font-size: 30px;
+  font-weight: 800;
+
+  letter-spacing: 4px;
+
+  color: #b026ff;
+
+  background: transparent;
+  border: none;
+
+  padding: 0;
+  margin: 0;
+
+  cursor: pointer;
+
+  text-decoration: none;
+
+  text-shadow:
+    0 0 5px #b026ff,
+    0 0 15px #b026ff,
+    0 0 30px #8a2be2;
+
+  transition: 0.3s ease;
+}
+
+.navbar-logo:hover {
+  transform: scale(1.05);
+
+  text-shadow:
+    0 0 8px #b026ff,
+    0 0 20px #b026ff,
+    0 0 35px #8a2be2;
 }
 
 
@@ -349,3 +375,40 @@
     font-size: 23px;
   }
 }
+
+
+/* =========================
+   EEC LOGO (GLOBAL BRANDING)
+========================= */
+
+.navbar-eec-logo {
+  height: 52px;
+  width: auto;
+  max-width: 220px;
+  object-fit: contain;
+  cursor: pointer;
+  opacity: 0.92;
+  filter: drop-shadow(0 0 4px rgba(176, 38, 255, 0.25));
+  transition: opacity 0.3s ease, filter 0.3s ease, transform 0.3s ease;
+  flex-shrink: 0;
+}
+
+.navbar-eec-logo:hover {
+  opacity: 1;
+  filter: drop-shadow(0 0 8px rgba(176, 38, 255, 0.55));
+  transform: scale(1.03);
+}
+
+@media (max-width: 768px) {
+  .navbar-eec-logo {
+    height: 40px;
+    max-width: 160px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-eec-logo {
+    height: 32px;
+    max-width: 130px;
+  }
+}

@@ -1,6 +1,6 @@
 import { useState } from "react";
-import GlobalLogos from "./GlobalLogos.jsx";
 import "./Navbar.css";
+import eecLogo from "../eec-logo.png";
 
 function Navbar({ setActivePage }) {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -36,9 +36,19 @@ function Navbar({ setActivePage }) {
           <span></span>
         </button>
 
-        <div className="navbar-branding-container">
-          <GlobalLogos onLogoClick={() => handleNavigation("home")} />
-        </div>
+        <button
+          className="navbar-logo"
+          onClick={() => handleNavigation("home")}
+        >
+          VOE
+        </button>
+
+        <img
+          src={eecLogo}
+          alt="Easwari Engineering College"
+          className="navbar-eec-logo"
+          onClick={() => handleNavigation("home")}
+        />
 
       </nav>
 
