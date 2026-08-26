@@ -1,21 +1,43 @@
+import { useEffect, useState } from "react";
 import "./Hero.css";
 import voeLogo from "../voe-logo.png";
 
-const logoFragments = [
-  "fragment-top",
-  "fragment-upper-left",
-  "fragment-upper-right",
-  "fragment-left",
-  "fragment-right",
-  "fragment-inner-left",
-  "fragment-inner-center",
-  "fragment-inner-right",
-  "fragment-bottom-left",
-  "fragment-bottom-right",
-  "fragment-badge",
-];
+const logoFragments = Array.from({ length: 25 }, (_, index) => {
+  const column = index % 5;
+  const row = Math.floor(index / 5);
+  const direction = index % 2 === 0 ? 1 : -1;
+
+  return {
+    id: `fragment-${index}`,
+    style: {
+      "--tile-left": `${column * 20}%`,
+      "--tile-top": `${row * 20}%`,
+      "--tile-background-x": `${column * 25}%`,
+      "--tile-background-y": `${row * 25}%`,
+      "--burst-x": `${(column - 2) * 210 + (row % 2 === 0 ? -30 : 30)}%`,
+      "--burst-y": `${(row - 2) * 210 + (column % 2 === 0 ? -35 : 35)}%`,
+      "--burst-rotate": `${direction * (120 + index * 14)}deg`,
+      "--burst-rotate-y": `${direction * (45 + index * 7)}deg`,
+      "--burst-scale": `${0.72 + (index % 4) * 0.08}`,
+      "--burst-delay": `${(index % 5) * 12}ms`,
+    },
+  };
+});
+
+const prefersReducedMotion = () =>
+  typeof window !== "undefined" &&
+  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 function Hero({ setActivePage }) {
+  const [reducedMotion] = useState(prefersReducedMotion);
+  const [introComplete, setIntroComplete] = useState(reducedMotion);
+
+  useEffect(() => {
+    document.body.classList.toggle("voe-intro-active", !introComplete);
+
+    return () => document.body.classList.remove("voe-intro-active");
+  }, [introComplete]);
+
   return (
     <section className="hero" id="home">
 
@@ -49,32 +71,45 @@ function Hero({ setActivePage }) {
 
       </div>
 
-      <div className="hero-logo-stage">
-        <div className="voe-logo-entrance">
-          <div className="voe-elemental-effects" aria-hidden="true">
-            <span className="voe-fire-ring"></span>
-            <span className="voe-water-ring"></span>
-            <span className="voe-electricity"></span>
+      {!introComplete && (
+        <div className="voe-logo-intro" aria-hidden="true">
+          <div className="voe-intro-aura">
+            <span className="voe-intro-fire"></span>
+            <span className="voe-intro-water"></span>
+            <span className="voe-intro-electricity"></span>
           </div>
-
+          <span className="voe-intro-shock"></span>
           <img
-            className="voe-logo-emblem"
+            className="voe-logo-intro-emblem"
             src={voeLogo}
-            alt="Voice of Easwarians logo"
+            alt=""
+            onAnimationEnd={(event) => {
+              if (event.animationName === "voe-logo-intro") {
+                setIntroComplete(true);
+              }
+            }}
           />
-
-          <span className="voe-logo-fragments" aria-hidden="true">
+          <span className="voe-intro-fragments">
             {logoFragments.map((fragment) => (
               <span
-                className={`voe-logo-fragment ${fragment}`}
-                key={fragment}
-                style={{ backgroundImage: `url(${voeLogo})` }}
+                className="voe-intro-fragment"
+                key={fragment.id}
+                style={{
+                  ...fragment.style,
+                  backgroundImage: `url(${voeLogo})`,
+                }}
               ></span>
             ))}
           </span>
-
-          <span className="voe-logo-sheen" aria-hidden="true"></span>
         </div>
+      )}
+
+      <div className={`hero-logo-stage ${introComplete ? "intro-complete" : ""}`}>
+        <img
+          className="voe-logo-emblem"
+          src={voeLogo}
+          alt="Voice of Easwarians logo"
+        />
       </div>
 
     </section>

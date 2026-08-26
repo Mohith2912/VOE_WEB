@@ -775,3 +775,394 @@ body,
     will-change: auto;
   }
 }
+
+/* FULL-SCREEN VOE INTRO */
+
+body.voe-intro-active {
+  overflow: hidden;
+}
+
+.hero-logo-stage:not(.intro-complete) {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.hero-logo-stage.intro-complete {
+  opacity: 1;
+}
+
+.hero-logo-stage .voe-logo-emblem {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 82%;
+  height: auto;
+  transform: none;
+  opacity: 1;
+  filter: drop-shadow(0 0 18px rgba(193, 92, 255, 0.36));
+  animation: none;
+}
+
+.voe-logo-intro {
+  position: fixed;
+  z-index: 2000;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  isolation: isolate;
+  perspective: 1800px;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 50% 48%, rgba(92, 25, 150, 0.38), transparent 35%),
+    radial-gradient(circle at 50% 50%, rgba(12, 103, 159, 0.22), transparent 59%),
+    #030008;
+}
+
+.voe-logo-intro::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -18%;
+  background: repeating-radial-gradient(
+    circle at center,
+    transparent 0 7vmin,
+    rgba(139, 219, 255, 0.06) 7.2vmin 7.35vmin,
+    transparent 7.5vmin 14vmin
+  );
+  opacity: 0;
+  animation: voe-intro-atmosphere 6.4s ease-out both;
+}
+
+.voe-logo-intro-emblem,
+.voe-intro-fragments {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(94vw, 94dvh);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  transform-style: preserve-3d;
+}
+
+.voe-logo-intro-emblem {
+  z-index: 2;
+  height: auto;
+  transform-origin: center;
+  will-change: transform, filter, opacity;
+  filter: drop-shadow(0 0 26px rgba(193, 92, 255, 0.5));
+  animation: voe-logo-intro 6.4s cubic-bezier(0.16, 0.86, 0.26, 1) both;
+}
+
+.voe-intro-fragments {
+  z-index: 3;
+}
+
+.voe-intro-fragment {
+  position: absolute;
+  top: var(--tile-top);
+  left: var(--tile-left);
+  width: 20%;
+  height: 20%;
+  display: block;
+  background-repeat: no-repeat;
+  background-size: 500% 500%;
+  background-position: var(--tile-background-x) var(--tile-background-y);
+  transform-origin: center;
+  opacity: 0;
+  will-change: transform, filter, opacity;
+  animation: voe-intro-fragment 3.7s cubic-bezier(0.18, 0.75, 0.22, 1)
+    calc(1.42s + var(--burst-delay)) both;
+}
+
+.voe-intro-aura {
+  position: absolute;
+  z-index: 1;
+  width: min(118vw, 118dvh);
+  aspect-ratio: 1;
+  transform-style: preserve-3d;
+}
+
+.voe-intro-fire,
+.voe-intro-water,
+.voe-intro-electricity {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+}
+
+.voe-intro-fire,
+.voe-intro-water {
+  -webkit-mask: radial-gradient(
+    circle,
+    transparent 53%,
+    #000 57% 69%,
+    transparent 73%
+  );
+  mask: radial-gradient(circle, transparent 53%, #000 57% 69%, transparent 73%);
+}
+
+.voe-intro-fire {
+  background: conic-gradient(
+    from 12deg,
+    transparent 0deg 18deg,
+    rgba(255, 68, 14, 0.25) 22deg,
+    #ff4515 46deg,
+    #ffd46d 58deg,
+    rgba(255, 68, 14, 0.82) 80deg,
+    transparent 118deg 166deg,
+    #ff6a1c 192deg,
+    #ffe184 208deg,
+    transparent 245deg 302deg,
+    rgba(255, 63, 18, 0.9) 335deg,
+    transparent 360deg
+  );
+  filter: blur(9px) drop-shadow(0 0 24px rgba(255, 80, 22, 0.86));
+  animation: voe-intro-fire 6.4s ease-in-out both;
+}
+
+.voe-intro-water {
+  inset: 7%;
+  background: conic-gradient(
+    from 198deg,
+    transparent 0deg 28deg,
+    rgba(61, 221, 255, 0.2) 36deg,
+    #37dbff 67deg,
+    #dcfbff 82deg,
+    rgba(34, 129, 255, 0.84) 106deg,
+    transparent 142deg 208deg,
+    #40e5ff 240deg,
+    #e1fcff 258deg,
+    transparent 296deg 338deg,
+    rgba(37, 174, 255, 0.72) 354deg
+  );
+  filter: blur(6px) drop-shadow(0 0 22px rgba(59, 218, 255, 0.78));
+  animation: voe-intro-water 6.4s ease-in-out both;
+}
+
+.voe-intro-electricity {
+  inset: 9%;
+  border: 3px dashed rgba(199, 245, 255, 0.95);
+  box-shadow:
+    0 0 15px #74e5ff,
+    0 0 38px #437cff,
+    inset 0 0 16px rgba(127, 235, 255, 0.8);
+  opacity: 0;
+  animation: voe-intro-electricity 1.28s steps(3, end) 4.26s both;
+}
+
+.voe-intro-electricity::before,
+.voe-intro-electricity::after {
+  content: "";
+  position: absolute;
+  inset: -10%;
+  border: 3px solid rgba(220, 253, 255, 0.78);
+  border-radius: 44% 56% 51% 49%;
+  clip-path: polygon(0 43%, 19% 39%, 25% 24%, 39% 35%, 51% 9%, 62% 40%, 84% 32%, 100% 48%, 82% 59%, 72% 82%, 59% 63%, 42% 93%, 33% 61%, 9% 68%);
+}
+
+.voe-intro-electricity::after {
+  opacity: 0.7;
+  transform: rotate(58deg) scale(0.86);
+}
+
+.voe-intro-shock {
+  position: absolute;
+  z-index: 4;
+  width: min(20vw, 20dvh);
+  aspect-ratio: 1;
+  border: 3px solid rgba(226, 253, 255, 0.92);
+  border-radius: 50%;
+  opacity: 0;
+  box-shadow:
+    0 0 18px rgba(126, 234, 255, 0.92),
+    0 0 55px rgba(80, 104, 255, 0.7),
+    inset 0 0 18px rgba(255, 255, 255, 0.82);
+  animation: voe-intro-shock 1.08s cubic-bezier(0.08, 0.65, 0.24, 1) 1.72s both;
+}
+
+@keyframes voe-logo-intro {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) translate3d(0, 0, -600px) scale(0.42);
+    filter: blur(3px) drop-shadow(0 0 8px rgba(193, 92, 255, 0.24));
+  }
+
+  12% {
+    opacity: 1;
+    transform: translate(-50%, -50%) translate3d(0, 0, 24px) scale(1.035);
+    filter: drop-shadow(0 0 34px rgba(193, 92, 255, 0.68));
+  }
+
+  20%,
+  24% {
+    opacity: 1;
+    transform: translate(-50%, -50%) translate3d(0, 0, 0) scale(1);
+  }
+
+  27%,
+  70% {
+    opacity: 0;
+    transform: translate(-50%, -50%) translate3d(0, 0, 0) scale(1);
+  }
+
+  76% {
+    opacity: 1;
+    transform: translate(-50%, -50%) translate3d(0, 0, 18px) scale(1.035);
+    filter: brightness(1.35) drop-shadow(0 0 42px rgba(137, 234, 255, 0.94));
+  }
+
+  91%,
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) translate3d(0, 0, 0) scale(1);
+    filter: drop-shadow(0 0 25px rgba(193, 92, 255, 0.58));
+  }
+}
+
+@keyframes voe-intro-fragment {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) rotateX(0) rotateY(0) rotateZ(0) scale(1);
+  }
+
+  5% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) rotateX(0) rotateY(0) rotateZ(0) scale(1);
+  }
+
+  17%,
+  48% {
+    opacity: 1;
+    transform: translate3d(var(--burst-x), var(--burst-y), 160px)
+      rotateY(var(--burst-rotate-y)) rotateZ(var(--burst-rotate))
+      scale(var(--burst-scale));
+    filter: brightness(1.18) drop-shadow(0 0 13px rgba(109, 231, 255, 0.92));
+  }
+
+  76% {
+    opacity: 1;
+    transform: translate3d(0, 0, 18px) rotateY(0) rotateZ(0) scale(1.02);
+    filter: brightness(1.45) drop-shadow(0 0 28px rgba(143, 238, 255, 0.98));
+  }
+
+  90%,
+  100% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) rotateY(0) rotateZ(0) scale(1);
+  }
+}
+
+@keyframes voe-intro-shock {
+  0% {
+    opacity: 0;
+    transform: scale(0.18);
+  }
+
+  12% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(9);
+  }
+}
+
+@keyframes voe-intro-fire {
+  0%,
+  14% {
+    opacity: 0;
+    transform: rotate(-45deg) scale(0.55);
+  }
+
+  27% {
+    opacity: 0.84;
+    transform: rotate(66deg) scale(1.02);
+  }
+
+  54% {
+    opacity: 1;
+    transform: rotate(335deg) scale(1.18);
+  }
+
+  78% {
+    opacity: 0.82;
+    transform: rotate(526deg) scale(1.05);
+  }
+
+  100% {
+    opacity: 0;
+    transform: rotate(660deg) scale(1.45);
+  }
+}
+
+@keyframes voe-intro-water {
+  0%,
+  14% {
+    opacity: 0;
+    transform: rotate(38deg) scale(0.5);
+  }
+
+  27% {
+    opacity: 0.86;
+    transform: rotate(-58deg) scale(1);
+  }
+
+  54% {
+    opacity: 1;
+    transform: rotate(-326deg) scale(1.2);
+  }
+
+  78% {
+    opacity: 0.78;
+    transform: rotate(-508deg) scale(1.08);
+  }
+
+  100% {
+    opacity: 0;
+    transform: rotate(-644deg) scale(1.48);
+  }
+}
+
+@keyframes voe-intro-electricity {
+  0%,
+  15% {
+    opacity: 0;
+    transform: scale(0.66) rotate(-14deg);
+  }
+
+  28%,
+  66% {
+    opacity: 1;
+    transform: scale(1.15) rotate(14deg);
+  }
+
+  84% {
+    opacity: 0.42;
+    transform: scale(0.96) rotate(-6deg);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1) rotate(0);
+  }
+}
+
+@keyframes voe-intro-atmosphere {
+  0%,
+  16% {
+    opacity: 0;
+    transform: scale(0.78);
+  }
+
+  52% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.34);
+  }
+}
