@@ -1,4 +1,5 @@
 import { useState } from "react";
+import GlobalLogos from "./GlobalLogos.jsx";
 import "./Navbar.css";
 
 function Navbar({ setActivePage }) {
@@ -35,12 +36,9 @@ function Navbar({ setActivePage }) {
           <span></span>
         </button>
 
-        <button
-          className="navbar-logo"
-          onClick={() => handleNavigation("home")}
-        >
-          VOE
-        </button>
+        <div className="navbar-branding-container">
+          <GlobalLogos onLogoClick={() => handleNavigation("home")} />
+        </div>
 
       </nav>
 

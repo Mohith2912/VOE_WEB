@@ -7,7 +7,6 @@ import Team from "./assets/components/Team.jsx";
 import About from "./assets/components/About.jsx";
 import Contact from "./assets/components/Contact.jsx";
 import Footer from "./assets/components/Footer.jsx";
-import GlobalLogos from "./assets/components/GlobalLogos.jsx";
 
 function App() {
   const [activePage, setActivePage] = useState("home");
@@ -23,7 +22,6 @@ function App() {
 
   return (
     <>
-      <GlobalLogos />
       {/* ================= NAVBAR ================= */}
 
       <Navbar setActivePage={setActivePage} />

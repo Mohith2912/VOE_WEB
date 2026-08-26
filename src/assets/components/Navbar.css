@@ -81,42 +81,16 @@
 
 
 /* =========================
-   VOE LOGO
+   NAVBAR BRANDING
 ========================= */
 
-.navbar-logo {
-  font-size: 30px;
-  font-weight: 800;
-
-  letter-spacing: 4px;
-
-  color: #b026ff;
-
-  background: transparent;
-  border: none;
-
-  padding: 0;
-  margin: 0;
-
-  cursor: pointer;
-
-  text-decoration: none;
-
-  text-shadow:
-    0 0 5px #b026ff,
-    0 0 15px #b026ff,
-    0 0 30px #8a2be2;
-
-  transition: 0.3s ease;
-}
-
-.navbar-logo:hover {
-  transform: scale(1.05);
-
-  text-shadow:
-    0 0 8px #b026ff,
-    0 0 20px #b026ff,
-    0 0 35px #8a2be2;
+.navbar-branding-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  margin-left: 10px;
 }
 
 
