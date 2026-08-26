@@ -5,10 +5,9 @@ import { loadSlim } from "tsparticles-slim";
 import "./GlobalLogos.css";
 
 import voeLogo from "../voe-logo.jpeg";
-// Assuming user saved eec-logo.png as requested.
-// Fallback to svg if png doesn't exist just in case, but standard imports need exact paths.
-// If it fails to compile, user needs to ensure eec-logo.png is placed.
-import eecLogo from "../eec-logo.png";
+// Since you haven't manually saved the .png yet, I'm switching this back to the SVG placeholder so the app doesn't crash.
+// Please manually save the image you attached as eec-logo.png in the src/assets folder, then change this import.
+import eecLogo from "../eec-logo.svg";
 
 // Simple sleep helper
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
