@@ -20,15 +20,19 @@ function Hero({ setActivePage }) {
         </p>
 
         <div className="hero-buttons">
-          <a href="#events" className="primary-btn">
-            Explore Events
-          </a>
+          <button
+            className="primary-btn"
+            onClick={() => setActivePage("events")}
+          >
+            <span>Explore Events</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginLeft: "8px" }}><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
 
           <button
             className="secondary-btn"
             onClick={() => setActivePage("about")}
           >
-            ABOUT VOE
+            <span>About VOE</span>
           </button>
         </div>
       </div>
@@ -39,6 +43,11 @@ function Hero({ setActivePage }) {
           src={voeLogo}
           alt="Voice of Easwarians logo"
         />
+      </div>
+
+      {/* Subtle luxury scroll indicator */}
+      <div className="hero-scroll-cue" aria-hidden="true">
+        <span className="scroll-pill" />
       </div>
     </section>
   );

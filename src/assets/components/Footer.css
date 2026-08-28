@@ -1,226 +1,170 @@
-/* =========================
-   FOOTER
-========================= */
+/* ============================================================
+   FOOTER — LUXURY SLATE & AMETHYST ANCHOR
+   ============================================================ */
 
 .footer {
   width: 100%;
-
-  background:
-    linear-gradient(
-      135deg,
-      #080510,
-      #12071d
-    );
-
-  border-top: 1px solid rgba(176, 38, 255, 0.3);
-
-  color: white;
-
-  padding: 70px 8% 25px;
-
-  box-shadow:
-    0 -10px 40px rgba(176, 38, 255, 0.08);
+  background: #0B0F19;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  color: #FFFFFF;
+  padding: 80px 8% 28px;
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 -12px 40px -10px rgba(11, 15, 25, 0.08);
 }
 
 
-/* =========================
+/* ============================================================
    FOOTER CONTAINER
-========================= */
+   ============================================================ */
 
 .footer-container {
   max-width: 1200px;
-
   margin: 0 auto;
-
   display: grid;
-
   grid-template-columns: 1.3fr 1fr 1.3fr;
-
   gap: 60px;
 }
 
 
-/* =========================
+/* ============================================================
    BRAND
-========================= */
+   ============================================================ */
 
 .footer-brand h2 {
   margin: 0 0 8px;
-
-  font-size: 38px;
-
+  font-size: 36px;
+  font-family: var(--font-display);
   font-weight: 800;
-
-  letter-spacing: 5px;
-
-  color: #b026ff;
-
-  text-shadow:
-    0 0 8px #b026ff,
-    0 0 20px rgba(176, 38, 255, 0.7);
+  letter-spacing: 4px;
+  color: #A855F7;
+  text-shadow: 0 0 24px rgba(168, 85, 247, 0.35);
 }
 
 .footer-brand p {
-  margin: 0 0 12px;
-
-  font-size: 15px;
-
+  margin: 0 0 10px;
+  font-size: 14px;
+  font-family: var(--font-display);
   font-weight: 600;
-
   letter-spacing: 2px;
-
-  color: white;
+  color: #E2E8F0;
 }
 
 .footer-brand span {
-  color: #999;
-
+  color: #94A3B8;
   font-size: 13px;
-
-  line-height: 1.6;
+  font-family: var(--font-body);
+  line-height: 1.65;
 }
 
 
-/* =========================
+/* ============================================================
    FOOTER HEADINGS
-========================= */
+   ============================================================ */
 
 .footer h3 {
-  margin: 0 0 22px;
-
-  font-size: 12px;
-
+  margin: 0 0 20px;
+  font-size: 11px;
+  font-family: var(--font-display);
+  font-weight: 700;
   letter-spacing: 3px;
-
-  color: #b026ff;
+  color: #A855F7;
+  text-transform: uppercase;
 }
 
 
-/* =========================
+/* ============================================================
    QUICK LINKS
-========================= */
+   ============================================================ */
 
 .footer-link-list {
   display: flex;
-
   flex-direction: column;
-
-  gap: 13px;
+  gap: 12px;
 }
 
 .footer-link-list span {
-  color: #aaa;
-
-  font-size: 13px;
-
-  letter-spacing: 1px;
-
+  color: #94A3B8;
+  font-size: 12.5px;
+  font-family: var(--font-body);
+  font-weight: 500;
+  letter-spacing: 1.5px;
   cursor: pointer;
-
-  transition: 0.3s ease;
+  transition:
+    color 0.2s var(--ease-spring),
+    padding-left 0.22s var(--ease-spring);
 }
 
 .footer-link-list span:hover {
-  color: #b026ff;
-
+  color: #FFFFFF;
   padding-left: 6px;
-
-  text-shadow:
-    0 0 8px rgba(176, 38, 255, 0.6);
 }
 
 
-/* =========================
+/* ============================================================
    CONNECT
-========================= */
+   ============================================================ */
 
 .footer-connect p {
   max-width: 300px;
-
-  margin: 0 0 20px;
-
-  color: #aaa;
-
+  margin: 0 0 18px;
+  color: #94A3B8;
   font-size: 13px;
-
+  font-family: var(--font-body);
   line-height: 1.7;
 }
 
 .footer-socials {
   display: flex;
-
   flex-wrap: wrap;
-
   gap: 20px;
 }
-
-
-/* Instagram + LinkedIn */
 
 .footer-socials span,
 .footer-socials a,
 .footer-socials a:visited {
-  color: #aaa;
-
+  color: #94A3B8;
   font-size: 11px;
-
+  font-family: var(--font-display);
+  font-weight: 600;
   letter-spacing: 2px;
-
   text-decoration: none;
-
   cursor: pointer;
-
-  transition: 0.3s ease;
+  transition: color 0.2s var(--ease-spring);
 }
-
-
-/* Hover */
 
 .footer-socials span:hover,
 .footer-socials a:hover {
-  color: #b026ff;
-
-  text-shadow:
-    0 0 8px #b026ff;
+  color: #A855F7;
 }
 
 
-/* =========================
+/* ============================================================
    FOOTER BOTTOM
-========================= */
+   ============================================================ */
 
 .footer-bottom {
   max-width: 1200px;
-
   margin: 55px auto 0;
-
-  padding-top: 20px;
-
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-
+  padding-top: 22px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
   display: flex;
-
   justify-content: space-between;
-
   gap: 20px;
-
-  color: #666;
-
-  font-size: 9px;
-
-  letter-spacing: 2px;
+  color: #475569;
+  font-size: 10px;
+  font-family: var(--font-body);
+  letter-spacing: 1.5px;
 }
 
 
-/* =========================
-   TABLET
-========================= */
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
 
 @media (max-width: 900px) {
-
   .footer-container {
     grid-template-columns: 1fr 1fr;
-
     gap: 45px;
   }
 
@@ -229,21 +173,14 @@
   }
 }
 
-
-/* =========================
-   MOBILE
-========================= */
-
 @media (max-width: 600px) {
-
   .footer {
     padding: 60px 6% 25px;
   }
 
   .footer-container {
     grid-template-columns: 1fr;
-
-    gap: 40px;
+    gap: 36px;
   }
 
   .footer-brand {
@@ -252,11 +189,8 @@
 
   .footer-bottom {
     flex-direction: column;
-
-    gap: 12px;
-
+    gap: 10px;
     text-align: center;
-
     line-height: 1.6;
   }
 }

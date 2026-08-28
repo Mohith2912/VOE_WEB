@@ -1,4 +1,17 @@
-* {
+/* ============================================================
+   VOE WEBSITE — GLOBAL DESIGN SYSTEM (LUXURY LIGHT-TINTED SYSTEM)
+   ============================================================ */
+
+/* Google Fonts: Inter & Space Grotesk */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&display=swap');
+
+/* ============================================================
+   RESET & FOUNDATION
+   ============================================================ */
+
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -9,9 +22,155 @@ body,
 #root {
   width: 100%;
   min-height: 100%;
-  background: #05000d;
+  background-color: #F4F5F9;
 }
 
 body {
   overflow-x: hidden;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 16px;
+  line-height: 1.65;
+  color: #0F172A;
+  background-color: #F4F5F9;
+
+  /* Atmospheric non-white multi-tonal canvas: Pearl, Mist, Champagne, Silver-Fog & Amethyst Breath */
+  background-image:
+    radial-gradient(at 12% 10%, rgba(109, 40, 217, 0.045) 0px, transparent 45%),
+    radial-gradient(at 88% 18%, rgba(2, 132, 199, 0.04) 0px, transparent 50%),
+    radial-gradient(at 50% 45%, rgba(243, 240, 235, 0.9) 0px, transparent 65%),
+    radial-gradient(at 18% 75%, rgba(124, 58, 237, 0.035) 0px, transparent 50%),
+    radial-gradient(at 82% 85%, rgba(224, 231, 255, 0.6) 0px, transparent 55%);
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* ============================================================
+   DESIGN TOKENS (LUXURY LIGHT-TINTED SYSTEM)
+   ============================================================ */
+
+:root {
+  /* ── Brand Colors (Regal Amethyst & Cyber Cyan) ── */
+  --voe-purple:          #6D28D9;
+  --voe-purple-light:    #7C3AED;
+  --voe-purple-glow:     rgba(109, 40, 217, 0.15);
+  --voe-purple-subtle:   rgba(109, 40, 217, 0.06);
+  --voe-purple-border:   rgba(109, 40, 217, 0.16);
+  --voe-cyan:            #0284C7;
+  --voe-cyan-soft:       #0EA5E9;
+  --voe-cyan-subtle:     rgba(2, 132, 199, 0.06);
+
+  /* ── Tinted Surface Palette (Pearl, Mist, Champagne, Frosted Ivory) ── */
+  --bg-page:             #F4F5F9;
+  --bg-section-alt:      rgba(238, 241, 248, 0.7);
+  --bg-surface-pearl:    rgba(250, 251, 255, 0.85);
+  --bg-surface-mist:     rgba(244, 246, 252, 0.88);
+  --bg-surface-champagne:rgba(248, 246, 242, 0.9);
+  --bg-surface-elevated: rgba(255, 255, 255, 0.95);
+  --bg-glass-nav:        rgba(248, 249, 253, 0.85);
+  --bg-glass-card:       rgba(250, 251, 255, 0.82);
+
+  /* ── Typography (Deep Slate & Muted Tones) ── */
+  --text-primary:        #0F172A; /* Slate 900 */
+  --text-secondary:      #334155; /* Slate 700 */
+  --text-muted:          #64748B; /* Slate 500 */
+  --text-accent:         #6D28D9;
+
+  /* ── Alpha Borders & Dual Bevel Highlight ── */
+  --border-subtle:       rgba(203, 213, 225, 0.65);
+  --border-glass:        rgba(255, 255, 255, 0.8);
+  --border-brand:        rgba(109, 40, 217, 0.18);
+  --border-brand-glow:   rgba(124, 58, 237, 0.35);
+
+  /* ── Layered Ambient Depth Shadows ── */
+  --shadow-sm:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 1px 3px rgba(15, 23, 42, 0.03),
+    0 3px 8px rgba(15, 23, 42, 0.02);
+  --shadow-md:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    0 2px 4px rgba(15, 23, 42, 0.03),
+    0 10px 28px -4px rgba(15, 23, 42, 0.05);
+  --shadow-lg:
+    inset 0 1px 0 rgba(255, 255, 255, 1),
+    0 4px 14px rgba(15, 23, 42, 0.04),
+    0 24px 56px -8px rgba(15, 23, 42, 0.07);
+  --shadow-hover:
+    inset 0 1px 0 rgba(255, 255, 255, 1),
+    0 8px 24px -4px rgba(109, 40, 217, 0.14),
+    0 28px 64px -10px rgba(15, 23, 42, 0.09);
+  --shadow-brand:
+    0 2px 8px rgba(109, 40, 217, 0.22),
+    0 12px 32px rgba(109, 40, 217, 0.2);
+
+  /* ── Motion & Easing (MNC Fluid Standard) ── */
+  --ease-spring:         cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-smooth:         cubic-bezier(0.25, 1, 0.5, 1);
+  --transition-fast:     160ms var(--ease-spring);
+  --transition-base:     260ms var(--ease-spring);
+  --transition-slow:     380ms var(--ease-spring);
+
+  /* ── Structural Radii Scale ── */
+  --radius-xs:           8px;
+  --radius-sm:           12px;
+  --radius-md:           16px;
+  --radius-lg:           22px;
+  --radius-xl:           28px;
+  --radius-full:         9999px;
+
+  /* ── Typography Stacks ── */
+  --font-display:        'Space Grotesk', 'Inter', -apple-system, sans-serif;
+  --font-body:           'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* ============================================================
+   ACCESSIBILITY & FOCUS
+   ============================================================ */
+
+:focus-visible {
+  outline: 2px solid var(--voe-purple-light);
+  outline-offset: 3px;
+  border-radius: var(--radius-xs);
+}
+
+/* ============================================================
+   CUSTOM SLIM SCROLLBAR
+   ============================================================ */
+
+::-webkit-scrollbar {
+  width: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #ECEEF5;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.6);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(109, 40, 217, 0.6);
+}
+
+/* ============================================================
+   SELECTION
+   ============================================================ */
+
+::selection {
+  background: rgba(124, 58, 237, 0.15);
+  color: #0F172A;
+}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

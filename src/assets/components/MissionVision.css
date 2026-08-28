@@ -1,19 +1,27 @@
-/* =========================
-   MISSION & VISION
-========================= */
+/* ============================================================
+   MISSION & VISION — LUXURY PEARL & MIST GLASS CARD SYSTEM
+   ============================================================ */
 
 .mission-vision {
   min-height: 80vh;
-  padding: 100px 8%;
+  padding: 110px 8%;
 
+  /* Translucent pearl & mist surface with subtle atmospheric gradient */
   background:
     radial-gradient(
-      circle at 50% 0%,
-      rgba(176, 38, 255, 0.12),
-      transparent 50%
-    );
+      circle at 50% -10%,
+      rgba(109, 40, 217, 0.05) 0%,
+      rgba(2, 132, 199, 0.03) 45%,
+      transparent 70%
+    ),
+    rgba(244, 246, 252, 0.75);
 
-  color: white;
+  color: var(--text-primary);
+
+  position: relative;
+  z-index: 2;
+  border-top: 1px solid rgba(203, 213, 225, 0.6);
+  border-bottom: 1px solid rgba(203, 213, 225, 0.5);
 }
 
 .mission-vision-container {
@@ -22,210 +30,226 @@
 }
 
 
-/* =========================
-   HEADING
-========================= */
+/* ============================================================
+   SECTION HEADING
+   ============================================================ */
 
 .mv-heading {
   text-align: center;
-  margin-bottom: 60px;
+  margin-bottom: 64px;
 }
 
 .mv-heading p {
-  margin: 0 0 15px;
-
-  color: #c77dff;
-
-  font-size: 13px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 18px;
+  color: var(--voe-purple);
+  background: rgba(248, 246, 242, 0.9);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(109, 40, 217, 0.18);
+  border-radius: var(--radius-full);
+  padding: 6px 18px;
+  font-size: 11px;
+  font-family: var(--font-display);
   font-weight: 700;
-  letter-spacing: 5px;
+  letter-spacing: 3.5px;
+  text-transform: uppercase;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 1),
+    0 2px 8px rgba(109, 40, 217, 0.05);
 }
 
 .mv-heading h2 {
   margin: 0;
-
-  font-size: clamp(40px, 6vw, 65px);
+  font-size: clamp(38px, 5.5vw, 62px);
+  font-family: var(--font-display);
   font-weight: 800;
-
-  color: white;
+  color: var(--text-primary);
+  letter-spacing: -0.8px;
+  line-height: 1.08;
 }
 
 .mv-heading h2 span {
-  color: #b026ff;
-
-  text-shadow:
-    0 0 10px #b026ff,
-    0 0 25px rgba(176, 38, 255, 0.6);
+  color: var(--voe-purple);
+  text-shadow: 0 2px 20px rgba(109, 40, 217, 0.14);
 }
 
 .mv-line {
-  width: 80px;
-  height: 2px;
-
-  margin: 25px auto 0;
-
-  background: #b026ff;
-
-  box-shadow:
-    0 0 8px #b026ff,
-    0 0 20px rgba(176, 38, 255, 0.6);
+  width: 52px;
+  height: 3px;
+  margin: 24px auto 0;
+  background: linear-gradient(90deg, var(--voe-purple), var(--voe-cyan));
+  border-radius: var(--radius-full);
+  opacity: 0.75;
 }
 
 
-/* =========================
-   VISION & MISSION GRID
-========================= */
+/* ============================================================
+   GRID
+   ============================================================ */
 
 .mv-grid {
   display: grid;
-
   grid-template-columns: repeat(2, 1fr);
-
-  gap: 30px;
+  gap: 28px;
 }
 
 
-/* =========================
-   CARDS
-========================= */
+/* ============================================================
+   CARDS — TACTILE FROSTED PEARL & MIST GLASS PANELS
+   ============================================================ */
 
 .mv-card {
   position: relative;
+  padding: 48px 44px;
+  min-height: 310px;
 
-  padding: 45px 40px;
+  /* Frosted pearl glass surface with champagne tint */
+  background: rgba(250, 251, 255, 0.85);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
 
-  min-height: 300px;
+  border: 1px solid rgba(203, 213, 225, 0.7);
+  border-radius: var(--radius-lg);
 
-  background: rgba(20, 10, 35, 0.75);
-
-  border: 1px solid rgba(176, 38, 255, 0.35);
-
-  border-radius: 20px;
+  /* Dual-layer ambient shadow with inner beveled light edge */
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 1),
+    0 1px 3px rgba(15, 23, 42, 0.03),
+    0 12px 36px -6px rgba(15, 23, 42, 0.05);
 
   overflow: hidden;
 
-  transition: 0.35s ease;
+  transition:
+    transform 0.28s var(--ease-spring),
+    border-color 0.24s var(--ease-spring),
+    box-shadow 0.28s var(--ease-spring),
+    background 0.24s var(--ease-spring);
 }
 
+/* Gradient accent top stroke */
 .mv-card::before {
   content: "";
-
   position: absolute;
-
   top: 0;
   left: 0;
-
   width: 100%;
-  height: 2px;
-
-  background: #b026ff;
-
-  box-shadow:
-    0 0 15px #b026ff,
-    0 0 30px rgba(176, 38, 255, 0.6);
+  height: 3.5px;
+  background: linear-gradient(90deg, var(--voe-purple), var(--voe-cyan) 80%, transparent);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
 }
 
 .mv-card:hover {
-  transform: translateY(-8px);
-
-  border-color: #b026ff;
-
+  transform: translateY(-6px);
+  background: rgba(255, 255, 255, 0.96);
+  border-color: rgba(109, 40, 217, 0.28);
   box-shadow:
-    0 0 25px rgba(176, 38, 255, 0.2),
-    inset 0 0 25px rgba(176, 38, 255, 0.05);
+    inset 0 1px 0 rgba(255, 255, 255, 1),
+    0 8px 24px -4px rgba(109, 40, 217, 0.12),
+    0 24px 54px -8px rgba(15, 23, 42, 0.09);
 }
 
 
-/* =========================
-   NUMBER
-========================= */
+/* ============================================================
+   NUMBER BADGE
+   ============================================================ */
 
 .mv-number {
   position: absolute;
-
-  top: 25px;
-  right: 30px;
-
-  font-size: 13px;
-
-  color: #777;
-
+  top: 28px;
+  right: 32px;
+  font-size: 11.5px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--text-muted);
   letter-spacing: 2px;
+  background: rgba(241, 244, 250, 0.9);
+  border: 1px solid rgba(203, 213, 225, 0.75);
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
 
-/* =========================
-   ICON
-========================= */
+/* ============================================================
+   ICON CONTAINER
+   ============================================================ */
 
 .mv-icon {
-  font-size: 35px;
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-sm);
+  background: rgba(245, 243, 255, 0.9);
+  border: 1px solid rgba(109, 40, 217, 0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: var(--voe-purple);
+  margin-bottom: 24px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 1),
+    0 2px 6px rgba(109, 40, 217, 0.04);
+  transition:
+    transform 0.24s var(--ease-spring),
+    background 0.24s var(--ease-spring),
+    border-color 0.24s var(--ease-spring);
+}
 
-  color: #b026ff;
-
-  margin-bottom: 20px;
-
-  text-shadow:
-    0 0 10px #b026ff,
-    0 0 20px rgba(176, 38, 255, 0.6);
+.mv-card:hover .mv-icon {
+  transform: scale(1.06);
+  background: rgba(237, 233, 254, 0.95);
+  border-color: rgba(109, 40, 217, 0.32);
 }
 
 
-/* =========================
-   TITLE
-========================= */
+/* ============================================================
+   TITLE & DESCRIPTION
+   ============================================================ */
 
 .mv-card h3 {
-  margin: 0 0 18px;
-
-  font-size: 24px;
-
-  letter-spacing: 3px;
-
-  color: white;
+  margin: 0 0 16px;
+  font-size: 22px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--text-primary);
 }
-
-
-/* =========================
-   DESCRIPTION
-========================= */
 
 .mv-card p {
   margin: 0;
-
   max-width: 520px;
-
-  font-size: 16px;
-
-  line-height: 1.8;
-
-  color: #cfcfe0;
+  font-size: 15.5px;
+  font-family: var(--font-body);
+  line-height: 1.75;
+  color: var(--text-secondary);
 }
 
 
-/* =========================
-   MOBILE
-========================= */
+/* ============================================================
+   MOBILE RESPONSIVE
+   ============================================================ */
 
 @media (max-width: 768px) {
-
   .mission-vision {
     padding: 80px 5%;
   }
 
   .mv-grid {
     grid-template-columns: 1fr;
+    gap: 20px;
   }
 
   .mv-card {
-    padding: 35px 25px;
+    padding: 36px 26px;
   }
 
   .mv-card h3 {
-    font-size: 21px;
+    font-size: 19px;
   }
 
   .mv-card p {
-    font-size: 14px;
+    font-size: 14.5px;
   }
 }

@@ -135,24 +135,30 @@
 
 /* Text Wordmark Beside Emblem */
 .voe-continuous-text {
-  font-size: 28px;
+  font-size: 26px;
   font-weight: 800;
-  letter-spacing: 4px;
-  color: #b026ff;
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+  letter-spacing: 3px;
+  color: #7B2FBE;
   line-height: 1;
-  text-shadow:
-    0 0 6px #b026ff,
-    0 0 18px #b026ff,
-    0 0 32px #8a2be2;
-  transition: 0.3s ease;
+  text-shadow: none;
+  transition:
+    transform 0.22s cubic-bezier(0.25, 1, 0.5, 1),
+    color 0.22s ease;
+  display: inline-block;
 }
 
 .voe-continuous-wrapper:hover .voe-continuous-text {
   transform: scale(1.04);
-  text-shadow:
-    0 0 10px #b026ff,
-    0 0 25px #b026ff,
-    0 0 45px #00e5ff;
+  color: #5C1A9A;
+  text-shadow: 0 0 16px rgba(123, 47, 190, 0.25);
+}
+
+/* Keyboard focus on the wrapper */
+.voe-continuous-wrapper:focus-visible {
+  outline: 2px solid #7B2FBE;
+  outline-offset: 4px;
+  border-radius: 6px;
 }
 
 /* Responsive Scaling */
