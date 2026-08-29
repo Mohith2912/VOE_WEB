@@ -1,12 +1,12 @@
 /* ============================================================
-   TEAM SECTION — LUXURY MULTI-TIERED GLASS SYSTEM
+   TEAM SECTION — LIQUID GLASS ARCHITECTURE
    ============================================================ */
 
 .team-section {
   min-height: 100vh;
   padding: 120px 8% 80px;
   background: transparent;
-  color: var(--text-primary);
+  color: var(--text-body);
   position: relative;
   z-index: 2;
 }
@@ -15,7 +15,6 @@
   max-width: 1200px;
   margin: auto;
 }
-
 
 /* ============================================================
    HEADING
@@ -31,20 +30,18 @@
   align-items: center;
   gap: 8px;
   margin: 0 0 16px;
-  color: var(--voe-purple);
-  background: rgba(248, 246, 242, 0.9);
+  color: var(--royal-fusion);
+  background: rgba(255,255,255,0.88);
   backdrop-filter: blur(12px);
-  border: 1px solid rgba(109, 40, 217, 0.18);
+  border: 1.5px solid rgba(139,92,246,0.28);
   border-radius: var(--radius-full);
-  padding: 6px 18px;
+  padding: 7px 22px;
   font-size: 11px;
   font-family: var(--font-display);
   font-weight: 700;
   letter-spacing: 3.5px;
   text-transform: uppercase;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 1),
-    0 2px 8px rgba(109, 40, 217, 0.05);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,1), 0 4px 12px rgba(139,92,246,0.1);
 }
 
 .team-heading h1 {
@@ -52,7 +49,10 @@
   font-size: clamp(38px, 5.8vw, 72px);
   font-family: var(--font-display);
   font-weight: 800;
-  color: var(--text-primary);
+  background: linear-gradient(90deg, #3B82F6 0%, #8B5CF6 45%, #EC4899 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   letter-spacing: -0.8px;
 }
 
@@ -63,7 +63,6 @@
   font-family: var(--font-body);
   color: var(--text-secondary);
 }
-
 
 /* ============================================================
    LEADERSHIP GRID
@@ -76,82 +75,87 @@
   margin-bottom: 48px;
 }
 
-
 /* ============================================================
-   FACULTY & LEADERSHIP TINTED GLASS CARDS
+   FACULTY & LEADERSHIP LIQUID GLASS CARDS
    ============================================================ */
 
 .faculty-incharge,
 .leadership-card {
   padding: 34px 28px;
-  border-radius: var(--radius-lg);
-  background: rgba(250, 251, 255, 0.85);
-  backdrop-filter: blur(28px) saturate(180%);
-  -webkit-backdrop-filter: blur(28px) saturate(180%);
-  border: 1px solid rgba(203, 213, 225, 0.7);
+  border-radius: 20px;
+  overflow: hidden;
+  background: linear-gradient(135deg,
+    rgba(30, 58, 138, 0.45) 0%,
+    rgba(88, 28, 135, 0.35) 60%,
+    rgba(139, 92, 246, 0.2) 100%
+  );
+  border: 1px solid rgba(139, 92, 246, 0.22);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 1),
-    0 1px 3px rgba(15, 23, 42, 0.03),
-    0 12px 32px -4px rgba(15, 23, 42, 0.05);
+    0 4px 32px rgba(59, 130, 246, 0.1),
+    0 1px 4px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(139, 92, 246, 0.15);
   text-align: center;
   transition:
-    transform 0.28s var(--ease-spring),
-    border-color 0.24s var(--ease-spring),
-    box-shadow 0.28s var(--ease-spring),
-    background 0.24s var(--ease-spring);
+    transform 0.4s var(--ease-spring),
+    border-color 0.3s var(--ease-spring),
+    box-shadow 0.4s var(--ease-spring);
 }
 
-/* Featured faculty spotlight card */
+/* Faculty card gets a slightly stronger top bloom */
 .faculty-incharge {
-  border: 1.5px solid rgba(109, 40, 217, 0.28);
-  background:
-    radial-gradient(
-      circle at center top,
-      rgba(109, 40, 217, 0.07) 0%,
-      rgba(250, 248, 244, 0.85) 50%,
-      rgba(244, 246, 252, 0.95) 100%
-    );
+  background: linear-gradient(135deg,
+    rgba(30, 58, 138, 0.55) 0%,
+    rgba(88, 28, 135, 0.45) 55%,
+    rgba(139, 92, 246, 0.25) 100%
+  );
+  border-color: rgba(139, 92, 246, 0.35);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 1),
-    0 4px 16px rgba(15, 23, 42, 0.04),
-    0 18px 44px -8px rgba(109, 40, 217, 0.1);
+    0 6px 40px rgba(59, 130, 246, 0.15),
+    0 2px 6px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(139, 92, 246, 0.2);
 }
 
 .faculty-incharge:hover,
 .leadership-card:hover {
-  transform: translateY(-5px);
-  background: rgba(255, 255, 255, 0.98);
-  border-color: rgba(109, 40, 217, 0.35);
+  transform: translateY(-8px) scale(1.02);
+  border-color: rgba(139, 92, 246, 0.48);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 1),
-    0 8px 24px -4px rgba(109, 40, 217, 0.12),
-    0 24px 52px -8px rgba(15, 23, 42, 0.08);
+    0 20px 56px rgba(59, 130, 246, 0.2),
+    0 8px 20px rgba(139, 92, 246, 0.18),
+    inset 0 1px 0 rgba(139, 92, 246, 0.22);
+}
+
+.faculty-incharge:active,
+.leadership-card:active {
+  animation: liquid-bounce 0.5s var(--ease-spring);
 }
 
 .faculty-incharge p,
 .leadership-card p {
   display: inline-block;
   margin: 0 0 12px;
-  color: var(--voe-purple);
+  color: #93C5FD;
   font-size: 11px;
   font-family: var(--font-display);
   font-weight: 700;
   letter-spacing: 2.5px;
   text-transform: uppercase;
-  background: rgba(245, 243, 255, 0.9);
-  border: 1px solid rgba(109, 40, 217, 0.16);
+  background: rgba(59, 130, 246, 0.15);
+  border: 1px solid rgba(59, 130, 246, 0.35);
   padding: 3px 14px;
   border-radius: var(--radius-full);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
 .faculty-incharge h2,
 .leadership-card h2 {
   margin: 0 0 8px;
-  color: var(--text-primary);
   font-size: 22px;
   font-family: var(--font-display);
   font-weight: 700;
+  background: linear-gradient(90deg, #E0E7FF, #C7D2FE);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .faculty-incharge h2 {
@@ -159,12 +163,11 @@
 }
 
 .leadership-card span {
-  color: var(--text-secondary);
+  color: #CBD5E1;
   font-size: 13.5px;
   font-family: var(--font-body);
   font-weight: 500;
 }
-
 
 /* ============================================================
    TEAM GRID
@@ -177,38 +180,39 @@
   align-items: start;
 }
 
-
 /* ============================================================
    TEAM ACCORDION CARD (DETAILS)
    ============================================================ */
 
 .team-card {
-  background: rgba(250, 251, 255, 0.85);
-  backdrop-filter: blur(28px) saturate(180%);
-  -webkit-backdrop-filter: blur(28px) saturate(180%);
-  border: 1px solid rgba(203, 213, 225, 0.7);
-  border-radius: var(--radius-lg);
+  position: relative;
   overflow: hidden;
+  border-radius: 20px;
+  background: linear-gradient(135deg,
+    rgba(30, 58, 138, 0.45) 0%,
+    rgba(88, 28, 135, 0.35) 60%,
+    rgba(139, 92, 246, 0.2) 100%
+  );
+  border: 1px solid rgba(139, 92, 246, 0.22);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 1),
-    0 1px 3px rgba(15, 23, 42, 0.03),
-    0 10px 28px -4px rgba(15, 23, 42, 0.04);
+    0 4px 32px rgba(59, 130, 246, 0.1),
+    0 1px 4px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(139, 92, 246, 0.15);
   transition:
-    transform 0.28s var(--ease-spring),
-    border-color 0.24s var(--ease-spring),
-    box-shadow 0.28s var(--ease-spring);
+    transform 0.4s var(--ease-spring),
+    border-color 0.3s var(--ease-spring),
+    box-shadow 0.4s var(--ease-spring);
   align-self: start;
 }
 
 .team-card:hover {
-  border-color: rgba(109, 40, 217, 0.28);
+  border-color: rgba(139, 92, 246, 0.48);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 1),
-    0 6px 20px -2px rgba(109, 40, 217, 0.08),
-    0 18px 40px -6px rgba(15, 23, 42, 0.06);
-  transform: translateY(-3px);
+    0 20px 56px rgba(59, 130, 246, 0.2),
+    0 8px 20px rgba(139, 92, 246, 0.18),
+    inset 0 1px 0 rgba(139, 92, 246, 0.22);
+  transform: translateY(-4px);
 }
-
 
 /* ============================================================
    TEAM HEADING BUTTON (SUMMARY)
@@ -227,11 +231,11 @@
   color: var(--text-primary);
   letter-spacing: 0.5px;
   user-select: none;
-  transition: background 0.18s var(--ease-spring);
+  transition: background 0.3s var(--ease-spring);
 }
 
 .team-card summary:hover {
-  background: rgba(245, 243, 255, 0.6);
+  background: rgba(255, 255, 255, 0.4);
 }
 
 .team-card summary::-webkit-details-marker {
@@ -243,30 +247,32 @@
   width: 32px;
   height: 32px;
   border-radius: var(--radius-full);
-  background: rgba(245, 243, 255, 0.9);
-  border: 1px solid rgba(109, 40, 217, 0.18);
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(142, 220, 255, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 20px;
   font-weight: 400;
-  color: var(--voe-purple);
+  color: var(--voe-rose);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 1);
   transition:
-    transform 0.28s var(--ease-spring),
-    background 0.2s ease;
+    transform 0.4s var(--ease-spring),
+    background 0.3s ease;
   line-height: 1;
 }
 
 .team-card summary:hover b {
-  background: rgba(237, 233, 254, 1);
+  background: var(--voe-ice-blue);
+  transform: scale(1.1);
 }
 
 .team-card[open] summary b {
   transform: rotate(45deg);
-  background: rgba(237, 233, 254, 1);
+  background: var(--voe-soft-pink);
+  color: #fff;
+  border-color: var(--voe-rose);
 }
-
 
 /* ============================================================
    MEMBERS DRAWER
@@ -277,7 +283,6 @@
   display: block;
 }
 
-
 /* ============================================================
    TEAM ADMIN SECTION
    ============================================================ */
@@ -285,12 +290,12 @@
 .team-admin-section {
   margin-bottom: 22px;
   padding-bottom: 20px;
-  border-bottom: 1px solid rgba(203, 213, 225, 0.6);
+  border-bottom: 1px solid rgba(142, 220, 255, 0.3);
 }
 
 .team-admin-title {
   margin: 0 0 14px;
-  color: var(--voe-purple);
+  color: var(--voe-rose);
   font-size: 10.5px;
   font-family: var(--font-display);
   font-weight: 700;
@@ -304,7 +309,6 @@
   gap: 12px;
 }
 
-
 /* ============================================================
    ADMIN CARD
    ============================================================ */
@@ -312,24 +316,24 @@
 .team-admin-card {
   padding: 16px;
   border-radius: var(--radius-sm);
-  background: rgba(245, 243, 255, 0.85);
-  border: 1px solid rgba(109, 40, 217, 0.18);
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(142, 220, 255, 0.3);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95);
   text-align: center;
   transition:
-    transform 0.22s var(--ease-spring),
-    box-shadow 0.22s var(--ease-spring),
-    border-color 0.22s var(--ease-spring),
-    background 0.22s var(--ease-spring);
+    transform 0.3s var(--ease-spring),
+    box-shadow 0.3s var(--ease-spring),
+    border-color 0.3s var(--ease-spring),
+    background 0.3s var(--ease-spring);
 }
 
 .team-admin-card:hover {
   transform: translateY(-2px);
-  border-color: var(--voe-purple);
+  border-color: rgba(255, 182, 217, 0.5);
   background: #FFFFFF;
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 1),
-    0 4px 14px rgba(109, 40, 217, 0.1);
+    0 4px 14px rgba(255, 182, 217, 0.15);
 }
 
 .team-admin-card h3 {
@@ -342,12 +346,11 @@
 
 .team-admin-card p {
   margin: 0;
-  color: var(--voe-purple);
+  color: var(--text-secondary);
   font-size: 12px;
   font-family: var(--font-body);
   font-weight: 600;
 }
-
 
 /* ============================================================
    TEAM MEMBERS SECTION
@@ -359,7 +362,7 @@
 
 .team-members-title {
   margin: 0 0 14px;
-  color: var(--voe-purple);
+  color: var(--voe-sky-blue);
   font-size: 10.5px;
   font-family: var(--font-display);
   font-weight: 700;
@@ -377,20 +380,20 @@
 .member-card {
   padding: 14px 16px;
   border-radius: var(--radius-xs);
-  background: rgba(244, 246, 252, 0.9);
-  border: 1px solid rgba(203, 213, 225, 0.7);
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(142, 220, 255, 0.2);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
   transition:
-    transform 0.2s var(--ease-spring),
-    border-color 0.2s var(--ease-spring),
-    background 0.2s var(--ease-spring),
-    box-shadow 0.2s var(--ease-spring);
+    transform 0.3s var(--ease-spring),
+    border-color 0.3s var(--ease-spring),
+    background 0.3s var(--ease-spring),
+    box-shadow 0.3s var(--ease-spring);
 }
 
 .member-card:hover {
-  border-color: rgba(109, 40, 217, 0.25);
+  border-color: rgba(142, 220, 255, 0.5);
   background: #FFFFFF;
-  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+  box-shadow: 0 4px 12px rgba(142, 220, 255, 0.1);
   transform: translateY(-2px);
 }
 
@@ -406,10 +409,9 @@
   margin: 0;
   font-size: 12px;
   font-family: var(--font-body);
-  color: var(--voe-purple);
+  color: var(--text-secondary);
   font-weight: 500;
 }
-
 
 /* ============================================================
    MOBILE RESPONSIVE
@@ -419,30 +421,24 @@
   .team-section {
     padding: 100px 5% 60px;
   }
-
   .team-leadership {
     grid-template-columns: 1fr;
     gap: 16px;
     margin-bottom: 36px;
   }
-
   .faculty-incharge {
     order: -1;
   }
-
   .team-grid {
     grid-template-columns: 1fr;
     gap: 18px;
   }
-
   .team-admin-grid {
     grid-template-columns: 1fr;
   }
-
   .member-grid {
     grid-template-columns: 1fr;
   }
-
   .team-card summary {
     padding: 22px 20px;
     font-size: 17px;
@@ -454,7 +450,6 @@
   .leadership-card {
     padding: 24px 20px;
   }
-
   .faculty-incharge h2 { font-size: 22px; }
   .leadership-card h2 { font-size: 20px; }
   .members { padding: 0 18px 20px; }

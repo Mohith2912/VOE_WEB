@@ -1,153 +1,302 @@
-/* ============================================================
-   FOOTER — LUXURY SLATE & AMETHYST ANCHOR
+﻿/* ============================================================
+   FOOTER — Dark Navy × Blue-Pink Gradient × Reference Style
    ============================================================ */
 
 .footer {
   width: 100%;
-  background: #0B0F19;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  color: #FFFFFF;
-  padding: 80px 8% 28px;
+  background: #0E1228;
+  border-top: 1px solid rgba(139, 92, 246, 0.18);
+  color: #CBD5E1;
+  padding: 52px 8% 0;
   position: relative;
   z-index: 2;
-  box-shadow: 0 -12px 40px -10px rgba(11, 15, 25, 0.08);
 }
 
-
 /* ============================================================
-   FOOTER CONTAINER
+   CONTAINER — 3 columns with vertical dividers
    ============================================================ */
 
 .footer-container {
   max-width: 1200px;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1.3fr 1fr 1.3fr;
-  gap: 60px;
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
 }
 
+/* ── VERTICAL DIVIDER ── */
+.footer-divider {
+  width: 1px;
+  align-self: stretch;
+  background: rgba(139, 92, 246, 0.2);
+  margin: 0 52px;
+  flex-shrink: 0;
+}
 
 /* ============================================================
-   BRAND
+   BRAND COLUMN
    ============================================================ */
 
-.footer-brand h2 {
-  margin: 0 0 8px;
-  font-size: 36px;
-  font-family: var(--font-display);
-  font-weight: 800;
-  letter-spacing: 4px;
-  color: #A855F7;
-  text-shadow: 0 0 24px rgba(168, 85, 247, 0.35);
+.footer-brand {
+  flex: 1.3;
+  min-width: 0;
 }
 
-.footer-brand p {
+/* Big gradient "VOE" */
+.footer-logo {
+  margin: 0 0 6px;
+  font-size: 40px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: 3px;
+  background: linear-gradient(90deg, #3B82F6 0%, #8B5CF6 50%, #EC4899 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+}
+
+/* Gradient subtitle */
+.footer-tagline {
   margin: 0 0 10px;
   font-size: 14px;
   font-family: var(--font-display);
   font-weight: 600;
-  letter-spacing: 2px;
-  color: #E2E8F0;
+  letter-spacing: 1px;
+  background: linear-gradient(90deg, #3B82F6, #EC4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-.footer-brand span {
+.footer-slogan {
+  display: block;
   color: #94A3B8;
   font-size: 13px;
   font-family: var(--font-body);
-  line-height: 1.65;
+  line-height: 1.6;
+  margin-bottom: 24px;
 }
 
+/* ── SOCIAL ICON BUTTONS ── */
+.footer-social-icons {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.footer-icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(139, 92, 246, 0.4);
+  background: transparent;
+  color: #94A3B8;
+  text-decoration: none;
+  transition:
+    border-color 0.22s ease,
+    color 0.22s ease,
+    background 0.22s ease,
+    transform 0.22s ease;
+}
+
+.footer-icon-btn svg {
+  width: 17px;
+  height: 17px;
+}
+
+.footer-icon-btn:hover {
+  border-color: #EC4899;
+  color: #EC4899;
+  background: rgba(236, 72, 153, 0.08);
+  transform: translateY(-2px);
+}
+
+.footer-icon-btn:nth-child(2):hover {
+  border-color: #3B82F6;
+  color: #3B82F6;
+  background: rgba(59, 130, 246, 0.08);
+}
+
+.footer-icon-btn:nth-child(3):hover {
+  border-color: #EF4444;
+  color: #EF4444;
+  background: rgba(239, 68, 68, 0.08);
+}
+
+.footer-icon-btn:nth-child(4):hover {
+  border-color: #8B5CF6;
+  color: #8B5CF6;
+  background: rgba(139, 92, 246, 0.08);
+}
 
 /* ============================================================
-   FOOTER HEADINGS
+   SECTION TITLE (QUICK LINKS / CONNECT)
    ============================================================ */
 
-.footer h3 {
+.footer-section-title {
   margin: 0 0 20px;
   font-size: 11px;
   font-family: var(--font-display);
   font-weight: 700;
   letter-spacing: 3px;
-  color: #A855F7;
   text-transform: uppercase;
+  background: linear-gradient(90deg, #3B82F6, #EC4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
-
 
 /* ============================================================
-   QUICK LINKS
+   QUICK LINKS COLUMN
    ============================================================ */
 
-.footer-link-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+.footer-links {
+  flex: 1;
+  min-width: 0;
 }
 
-.footer-link-list span {
-  color: #94A3B8;
+.footer-link-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-link-list li {
+  border-bottom: 1px solid rgba(139, 92, 246, 0.12);
+}
+.footer-link-list li:first-child {
+  border-top: 1px solid rgba(139, 92, 246, 0.12);
+}
+
+.footer-link-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #CBD5E1;
   font-size: 12.5px;
   font-family: var(--font-body);
   font-weight: 500;
   letter-spacing: 1.5px;
-  cursor: pointer;
-  transition:
-    color 0.2s var(--ease-spring),
-    padding-left 0.22s var(--ease-spring);
+  text-align: left;
+  transition: color 0.2s ease, padding-left 0.22s ease;
 }
 
-.footer-link-list span:hover {
-  color: #FFFFFF;
-  padding-left: 6px;
+.fl-icon {
+  font-size: 14px;
+  opacity: 0.7;
+  flex-shrink: 0;
+  line-height: 1;
 }
 
+.fl-label { flex: 1; }
+
+.fl-arrow {
+  color: #475569;
+  font-size: 16px;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.footer-link-item:hover {
+  color: #A78BFA;
+  padding-left: 8px;
+}
+
+.footer-link-item:hover .fl-arrow {
+  color: #A78BFA;
+  transform: translateX(3px);
+}
 
 /* ============================================================
-   CONNECT
+   CONNECT COLUMN
    ============================================================ */
 
+.footer-connect {
+  flex: 1.3;
+  min-width: 0;
+}
+
 .footer-connect p {
-  max-width: 300px;
-  margin: 0 0 18px;
   color: #94A3B8;
   font-size: 13px;
   font-family: var(--font-body);
-  line-height: 1.7;
+  line-height: 1.72;
+  margin: 0 0 22px;
+  max-width: 280px;
 }
 
-.footer-socials {
+/* ── CTA BUTTONS (Instagram / LinkedIn) ── */
+.footer-cta-buttons {
   display: flex;
+  gap: 14px;
   flex-wrap: wrap;
-  gap: 20px;
 }
 
-.footer-socials span,
-.footer-socials a,
-.footer-socials a:visited {
-  color: #94A3B8;
+.footer-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 18px;
+  border-radius: var(--radius-full);
+  background: transparent;
   font-size: 11px;
   font-family: var(--font-display);
-  font-weight: 600;
-  letter-spacing: 2px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
   text-decoration: none;
-  cursor: pointer;
-  transition: color 0.2s var(--ease-spring);
+  transition:
+    background 0.22s ease,
+    transform 0.22s ease,
+    box-shadow 0.22s ease;
 }
 
-.footer-socials span:hover,
-.footer-socials a:hover {
-  color: #A855F7;
+.footer-cta-btn svg {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
 }
 
+/* Instagram — pink outline */
+.footer-cta-insta {
+  border: 1.5px solid #EC4899;
+  color: #EC4899;
+}
+.footer-cta-insta:hover {
+  background: rgba(236, 72, 153, 0.12);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(236, 72, 153, 0.25);
+}
+
+/* LinkedIn — blue outline */
+.footer-cta-linkedin {
+  border: 1.5px solid #3B82F6;
+  color: #3B82F6;
+}
+.footer-cta-linkedin:hover {
+  background: rgba(59, 130, 246, 0.12);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.25);
+}
 
 /* ============================================================
-   FOOTER BOTTOM
+   FOOTER BOTTOM BAR
    ============================================================ */
 
 .footer-bottom {
   max-width: 1200px;
-  margin: 55px auto 0;
-  padding-top: 22px;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  margin: 40px auto 0;
+  padding: 18px 0 22px;
+  border-top: 1px solid rgba(139, 92, 246, 0.15);
   display: flex;
   justify-content: space-between;
   gap: 20px;
@@ -155,8 +304,8 @@
   font-size: 10px;
   font-family: var(--font-body);
   letter-spacing: 1.5px;
+  text-transform: uppercase;
 }
-
 
 /* ============================================================
    RESPONSIVE
@@ -164,33 +313,26 @@
 
 @media (max-width: 900px) {
   .footer-container {
-    grid-template-columns: 1fr 1fr;
-    gap: 45px;
+    flex-wrap: wrap;
   }
-
   .footer-brand {
-    grid-column: 1 / -1;
+    flex: 0 0 100%;
+  }
+  .footer-divider:first-of-type {
+    display: none;
+  }
+  .footer-divider {
+    width: 100%;
+    height: 1px;
+    margin: 24px 0;
+    align-self: auto;
   }
 }
 
 @media (max-width: 600px) {
-  .footer {
-    padding: 60px 6% 25px;
-  }
-
-  .footer-container {
-    grid-template-columns: 1fr;
-    gap: 36px;
-  }
-
-  .footer-brand {
-    grid-column: auto;
-  }
-
-  .footer-bottom {
-    flex-direction: column;
-    gap: 10px;
-    text-align: center;
-    line-height: 1.6;
-  }
+  .footer { padding: 44px 6% 0; }
+  .footer-container { flex-direction: column; }
+  .footer-divider { display: block; width: 100%; height: 1px; margin: 20px 0; }
+  .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+  .footer-cta-buttons { flex-direction: column; }
 }

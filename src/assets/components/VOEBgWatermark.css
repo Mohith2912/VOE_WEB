@@ -1,5 +1,5 @@
 /* ============================================================
-   VOE ATMOSPHERE LAYER & WATERMARK ENGINE
+   VOE ATMOSPHERE LAYER & WATERMARK ENGINE (LIQUID GLASS)
    ============================================================ */
 
 .voe-bg-watermark {
@@ -12,6 +12,7 @@
   align-items: center;
   justify-content: center;
   user-select: none;
+  background-color: transparent;
 }
 
 /* ── Interactive Cursor Halo Spotlight (Desktop) ── */
@@ -24,83 +25,99 @@
   border-radius: 50%;
   background: radial-gradient(
     circle,
-    rgba(124, 58, 237, 0.055) 0%,
-    rgba(2, 132, 199, 0.025) 45%,
+    rgba(142, 220, 255, 0.15) 0%,
+    rgba(255, 182, 217, 0.08) 45%,
     transparent 70%
   );
   pointer-events: none;
-  mix-blend-mode: multiply;
+  mix-blend-mode: soft-light;
   will-change: transform;
 }
 
-/* ── 4 Multi-colored Glowing Ambient Orbs (18–34s Drift) ── */
-.voe-glow-orb {
+/* ── 5 Multi-colored Translucent Wave Layers (Slow Drift) ── */
+.voe-wave-blob {
   position: absolute;
-  border-radius: 50%;
-  filter: blur(85px);
+  border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+  filter: blur(60px);
   pointer-events: none;
-  opacity: 0.65;
-  will-change: transform;
+  opacity: 0.5;
+  will-change: transform, border-radius;
+  mix-blend-mode: normal;
 }
 
-.voe-glow-orb.orb-purple {
-  width: min(50vw, 620px);
-  height: min(50vw, 620px);
-  top: -12%;
-  left: -8%;
-  background: radial-gradient(circle, rgba(124, 58, 237, 0.07) 0%, rgba(109, 40, 217, 0.02) 50%, transparent 70%);
-  animation: orb-drift-purple 26s ease-in-out infinite alternate;
+.voe-wave-blob.blob-ice {
+  width: min(60vw, 800px);
+  height: min(60vw, 800px);
+  top: -15%;
+  left: -10%;
+  background: rgba(221, 246, 255, 0.5);
+  animation: wave-drift-ice 28s ease-in-out infinite alternate;
 }
 
-.voe-glow-orb.orb-blue {
-  width: min(55vw, 680px);
-  height: min(55vw, 680px);
+.voe-wave-blob.blob-sky {
+  width: min(55vw, 750px);
+  height: min(55vw, 750px);
   bottom: -15%;
-  right: -12%;
-  background: radial-gradient(circle, rgba(2, 132, 199, 0.06) 0%, rgba(14, 165, 233, 0.02) 50%, transparent 70%);
-  animation: orb-drift-blue 32s ease-in-out infinite alternate;
+  right: -10%;
+  background: rgba(142, 220, 255, 0.45);
+  animation: wave-drift-sky 34s ease-in-out infinite alternate-reverse;
 }
 
-.voe-glow-orb.orb-pink {
-  width: min(42vw, 540px);
-  height: min(42vw, 540px);
-  top: 35%;
+.voe-wave-blob.blob-pink {
+  width: min(45vw, 600px);
+  height: min(45vw, 600px);
+  top: 30%;
   right: 15%;
-  background: radial-gradient(circle, rgba(236, 72, 153, 0.045) 0%, rgba(244, 114, 182, 0.015) 50%, transparent 70%);
-  animation: orb-drift-pink 22s ease-in-out infinite alternate;
+  background: rgba(255, 214, 234, 0.4);
+  animation: wave-drift-pink 24s ease-in-out infinite alternate;
 }
 
-.voe-glow-orb.orb-cyan {
-  width: min(45vw, 580px);
-  height: min(45vw, 580px);
-  bottom: 25%;
+.voe-wave-blob.blob-cyan {
+  width: min(50vw, 650px);
+  height: min(50vw, 650px);
+  bottom: 20%;
   left: 10%;
-  background: radial-gradient(circle, rgba(6, 182, 212, 0.05) 0%, rgba(56, 189, 248, 0.015) 50%, transparent 70%);
-  animation: orb-drift-cyan 28s ease-in-out infinite alternate;
+  background: rgba(184, 240, 255, 0.4);
+  animation: wave-drift-cyan 30s ease-in-out infinite alternate-reverse;
 }
 
-@keyframes orb-drift-purple {
-  0%   { transform: translate(0, 0) scale(1); }
-  50%  { transform: translate(10vw, 8vh) scale(1.08); }
-  100% { transform: translate(-4vw, 14vh) scale(0.96); }
+.voe-wave-blob.blob-rose {
+  width: min(35vw, 500px);
+  height: min(35vw, 500px);
+  top: 10%;
+  left: 30%;
+  background: rgba(255, 182, 217, 0.35);
+  animation: wave-drift-rose 26s ease-in-out infinite alternate;
 }
 
-@keyframes orb-drift-blue {
-  0%   { transform: translate(0, 0) scale(1); }
-  50%  { transform: translate(-10vw, -10vh) scale(1.1); }
-  100% { transform: translate(6vw, -6vh) scale(0.92); }
+@keyframes wave-drift-ice {
+  0%   { transform: translate(0, 0) scale(1) rotate(0deg); border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; }
+  50%  { transform: translate(12vw, 8vh) scale(1.1) rotate(20deg); border-radius: 60% 40% 30% 70% / 50% 60% 40% 50%; }
+  100% { transform: translate(-5vw, 15vh) scale(0.95) rotate(-10deg); border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; }
 }
 
-@keyframes orb-drift-pink {
-  0%   { transform: translate(0, 0) scale(1); }
-  50%  { transform: translate(-8vw, 10vh) scale(1.06); }
-  100% { transform: translate(8vw, -6vh) scale(0.95); }
+@keyframes wave-drift-sky {
+  0%   { transform: translate(0, 0) scale(1) rotate(0deg); border-radius: 50% 50% 40% 60% / 60% 40% 50% 50%; }
+  50%  { transform: translate(-12vw, -10vh) scale(1.15) rotate(-15deg); border-radius: 40% 60% 50% 50% / 50% 50% 60% 40%; }
+  100% { transform: translate(8vw, -8vh) scale(0.9) rotate(10deg); border-radius: 50% 50% 40% 60% / 60% 40% 50% 50%; }
 }
 
-@keyframes orb-drift-cyan {
-  0%   { transform: translate(0, 0) scale(1); }
-  50%  { transform: translate(8vw, -8vh) scale(1.09); }
-  100% { transform: translate(-6vw, 6vh) scale(0.94); }
+@keyframes wave-drift-pink {
+  0%   { transform: translate(0, 0) scale(1) rotate(0deg); border-radius: 30% 70% 60% 40% / 40% 50% 50% 60%; }
+  50%  { transform: translate(-10vw, 12vh) scale(1.08) rotate(25deg); border-radius: 50% 50% 40% 60% / 60% 40% 50% 50%; }
+  100% { transform: translate(10vw, -8vh) scale(0.95) rotate(-15deg); border-radius: 30% 70% 60% 40% / 40% 50% 50% 60%; }
+}
+
+@keyframes wave-drift-cyan {
+  0%   { transform: translate(0, 0) scale(1) rotate(0deg); border-radius: 60% 40% 50% 50% / 40% 60% 50% 50%; }
+  50%  { transform: translate(10vw, -10vh) scale(1.12) rotate(-20deg); border-radius: 40% 60% 40% 60% / 50% 50% 40% 60%; }
+  100% { transform: translate(-8vw, 8vh) scale(0.92) rotate(15deg); border-radius: 60% 40% 50% 50% / 40% 60% 50% 50%; }
+}
+
+@keyframes wave-drift-rose {
+  0%   { transform: translate(0, 0) scale(1) rotate(0deg); }
+  50%  { transform: translate(8vw, 15vh) scale(1.05) rotate(10deg); }
+  100% { transform: translate(-6vw, 10vh) scale(0.98) rotate(-5deg); }
 }
 
 /* ── Decorative Flowing Curved Energy Lines ── */
@@ -110,10 +127,10 @@
   width: 100%;
   height: 100%;
   pointer-events: none;
-  opacity: 0.7;
+  opacity: 0.8;
 }
 
-/* ── Light Ray Ambient Sweep (24s Beam) ── */
+/* ── Light Ray Ambient Sweep (Water Caustics/Reflection) ── */
 .voe-ambient-light-ray {
   position: absolute;
   top: -50%;
@@ -123,25 +140,26 @@
   background: linear-gradient(
     135deg,
     transparent 42%,
-    rgba(255, 255, 255, 0.4) 48%,
-    rgba(255, 255, 255, 0.5) 50%,
-    rgba(255, 255, 255, 0.4) 52%,
+    rgba(255, 255, 255, 0.5) 48%,
+    rgba(255, 255, 255, 0.7) 50%,
+    rgba(255, 255, 255, 0.5) 52%,
     transparent 58%
   );
-  opacity: 0.35;
+  opacity: 0.4;
   pointer-events: none;
-  animation: ray-sweep 24s ease-in-out infinite;
+  animation: ray-sweep 20s ease-in-out infinite;
+  mix-blend-mode: overlay;
 }
 
 @keyframes ray-sweep {
-  0%   { transform: translateY(-40%) rotate(0deg); opacity: 0; }
-  15%  { opacity: 0.35; }
-  50%  { transform: translateY(40%) rotate(5deg); opacity: 0.35; }
+  0%   { transform: translateY(-40%) rotate(-5deg); opacity: 0; }
+  15%  { opacity: 0.4; }
+  50%  { transform: translateY(40%) rotate(5deg); opacity: 0.5; }
   65%  { opacity: 0; }
-  100% { transform: translateY(-40%) rotate(0deg); opacity: 0; }
+  100% { transform: translateY(-40%) rotate(-5deg); opacity: 0; }
 }
 
-/* ── Atmospheric Ambient Mesh Glow ── */
+/* ── Atmospheric Ambient Mesh Glow (Water surface refraction) ── */
 .voe-bg-watermark__aura {
   position: absolute;
   width: clamp(450px, 70vmin, 950px);
@@ -149,26 +167,27 @@
   border-radius: 50%;
   background: radial-gradient(
     circle,
-    rgba(109, 40, 217, 0.045) 0%,
-    rgba(2, 132, 199, 0.02) 40%,
-    rgba(243, 240, 235, 0.04) 65%,
+    rgba(255, 255, 255, 0.4) 0%,
+    rgba(142, 220, 255, 0.15) 30%,
+    rgba(255, 182, 217, 0.05) 55%,
     transparent 75%
   );
   pointer-events: none;
-  animation: voe-wm-breathe 16s ease-in-out infinite;
+  animation: voe-wm-breathe 18s ease-in-out infinite;
   will-change: transform, opacity;
+  mix-blend-mode: screen;
 }
 
-/* ── Rotating Blurred Monogram Ring Layer ── */
+/* ── Rotating Blurred Monogram Ring Layer (Water ripple) ── */
 .voe-bg-watermark__ring {
   position: absolute;
   width: clamp(380px, 60vmin, 820px);
   height: clamp(380px, 60vmin, 820px);
   border-radius: 50%;
-  border: 1.5px dashed rgba(109, 40, 217, 0.08);
-  box-shadow: 0 0 40px rgba(109, 40, 217, 0.03);
+  border: 1.5px dashed rgba(142, 220, 255, 0.2);
+  box-shadow: 0 0 40px rgba(255, 255, 255, 0.1);
   pointer-events: none;
-  animation: voe-ring-rotate 45s linear infinite;
+  animation: voe-ring-rotate 60s linear infinite;
   will-change: transform;
 }
 
@@ -177,10 +196,10 @@
   position: absolute;
   inset: -22px;
   border-radius: 50%;
-  border: 1px solid rgba(2, 132, 199, 0.05);
+  border: 1px solid rgba(255, 182, 217, 0.15);
 }
 
-/* ── Floating Restrained Particle Field ── */
+/* ── Floating Restrained Particle Field (Bubbles) ── */
 .voe-bg-particles {
   position: absolute;
   inset: 0;
@@ -191,29 +210,29 @@
   position: absolute;
   border-radius: 50%;
   pointer-events: none;
-  filter: blur(0.8px);
-  opacity: 0.65;
+  filter: blur(1px);
+  opacity: 0.7;
   animation: particle-drift infinite ease-in-out;
 }
 
-.voe-particle.p-violet {
-  background: rgba(124, 58, 237, 0.35);
-  box-shadow: 0 0 14px rgba(124, 58, 237, 0.45);
+.voe-particle.p-blue {
+  background: rgba(142, 220, 255, 0.6);
+  box-shadow: 0 0 16px rgba(142, 220, 255, 0.8);
 }
 
 .voe-particle.p-cyan {
-  background: rgba(2, 132, 199, 0.3);
-  box-shadow: 0 0 16px rgba(2, 132, 199, 0.4);
+  background: rgba(184, 240, 255, 0.6);
+  box-shadow: 0 0 16px rgba(184, 240, 255, 0.8);
 }
 
 .voe-particle.p-pink {
-  background: rgba(236, 72, 153, 0.3);
-  box-shadow: 0 0 14px rgba(236, 72, 153, 0.4);
+  background: rgba(255, 182, 217, 0.6);
+  box-shadow: 0 0 16px rgba(255, 182, 217, 0.8);
 }
 
 @keyframes particle-drift {
-  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.4; }
-  50%      { transform: translate(24px, -30px) scale(1.15); opacity: 0.85; }
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.5; }
+  50%      { transform: translate(15px, -40px) scale(1.2); opacity: 0.9; }
 }
 
 /* ── Main VOE Watermark Logo ── */
@@ -224,26 +243,27 @@
   object-fit: contain;
   display: block;
 
-  opacity: 0.055;
+  opacity: 0.08; /* slightly increased for visibility in lighter theme */
 
   filter:
-    drop-shadow(0 0 60px rgba(109, 40, 217, 0.1))
-    saturate(0.9)
-    brightness(0.92);
+    drop-shadow(0 0 80px rgba(142, 220, 255, 0.2))
+    saturate(0.85)
+    brightness(1.1); /* Brighter for the light theme */
 
   border-radius: 50%;
   will-change: transform, opacity;
-  animation: voe-wm-breathe 16s ease-in-out infinite;
+  animation: voe-wm-breathe 18s ease-in-out infinite;
   aspect-ratio: 1;
   flex-shrink: 0;
+  mix-blend-mode: multiply;
 }
 
 /* ── Keyframe Animations ── */
 @keyframes voe-wm-breathe {
   0%   { transform: scale(1.000) translate( 0px,  0px); }
-  25%  { transform: scale(1.018) translate( 3px, -4px); }
+  25%  { transform: scale(1.015) translate( 4px, -3px); }
   50%  { transform: scale(1.025) translate( 0px,  0px); }
-  75%  { transform: scale(1.018) translate(-3px,  4px); }
+  75%  { transform: scale(1.015) translate(-4px,  3px); }
   100% { transform: scale(1.000) translate( 0px,  0px); }
 }
 
@@ -264,16 +284,16 @@
   .voe-bg-watermark__logo {
     width: clamp(200px, 60vmin, 380px);
     height: clamp(200px, 60vmin, 380px);
-    opacity: 0.04;
+    opacity: 0.06;
   }
   .voe-bg-cursor-halo,
   .voe-ambient-light-ray,
   .voe-decorative-lines {
     display: none;
   }
-  .voe-glow-orb {
-    filter: blur(50px);
-    opacity: 0.45;
+  .voe-wave-blob {
+    filter: blur(40px);
+    opacity: 0.35;
   }
 }
 
@@ -281,7 +301,7 @@
   .voe-bg-watermark__logo {
     width: clamp(150px, 65vmin, 260px);
     height: clamp(150px, 65vmin, 260px);
-    opacity: 0.03;
+    opacity: 0.05;
   }
 }
 
@@ -290,7 +310,7 @@
   .voe-bg-watermark__logo,
   .voe-bg-watermark__aura,
   .voe-bg-watermark__ring,
-  .voe-glow-orb,
+  .voe-wave-blob,
   .voe-ambient-light-ray,
   .voe-particle,
   .voe-decorative-lines {

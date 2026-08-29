@@ -5,13 +5,13 @@ import voeLogoImg from "../voe-logo.png";
 /**
  * AtmosphereLayer / VOEBgWatermark
  *
- * Cinematic Atmospheric Layer inspired by reference:
- * 1. 4 Multi-colored Glowing Orbs (Purple, Blue, Pink, Cyan) with async 18–34s drift.
- * 2. Decorative Flowing Curved Energy Lines (SVG glowing paths).
- * 3. Restrained Particle Field (20 luminous nodes with depth variation).
- * 4. Light Ray Ambient Sweep.
- * 5. Spatial VOE Logo Watermark (original proportions & colors, 5.5% opacity, breathing cycle).
- * 6. Interactive Cursor Halo Spotlight (smooth RAF lerp).
+ * Cinematic Atmospheric Layer inspired by:
+ * 1. 5 Multi-colored Wave Blobs (Ice Blue, Sky Blue, Pink, Soft Cyan, Rose) with async drift.
+ * 2. Decorative Flowing Water Waves (SVG paths).
+ * 3. Restrained Particle Field (refractions/bubbles).
+ * 4. Light Ray Ambient Sweep (water light reflection).
+ * 5. Spatial VOE Logo Watermark.
+ * 6. Interactive Cursor Halo Spotlight.
  */
 export default function VOEBgWatermark() {
   const containerRef = useRef(null);
@@ -100,20 +100,20 @@ export default function VOEBgWatermark() {
     };
   }, [prefersReduced]);
 
-  // Restrained particle field (20 nodes)
+  // Restrained particle field (bubbles/refractions)
   const particles = [
-    { top: "14%", left: "16%", size: "5px", cls: "p-violet", delay: "0s", dur: "18s" },
+    { top: "14%", left: "16%", size: "5px", cls: "p-blue", delay: "0s", dur: "18s" },
     { top: "26%", left: "84%", size: "7px", cls: "p-cyan", delay: "2s", dur: "22s" },
     { top: "38%", left: "10%", size: "4px", cls: "p-pink", delay: "4s", dur: "16s" },
-    { top: "58%", left: "90%", size: "6px", cls: "p-violet", delay: "1s", dur: "20s" },
+    { top: "58%", left: "90%", size: "6px", cls: "p-blue", delay: "1s", dur: "20s" },
     { top: "76%", left: "20%", size: "8px", cls: "p-cyan", delay: "3s", dur: "24s" },
     { top: "86%", left: "78%", size: "5px", cls: "p-pink", delay: "5s", dur: "19s" },
-    { top: "22%", left: "62%", size: "4px", cls: "p-violet", delay: "2.5s", dur: "17s" },
+    { top: "22%", left: "62%", size: "4px", cls: "p-blue", delay: "2.5s", dur: "17s" },
     { top: "50%", left: "46%", size: "6px", cls: "p-cyan", delay: "1.5s", dur: "21s" },
     { top: "32%", left: "34%", size: "5px", cls: "p-pink", delay: "3.5s", dur: "18s" },
-    { top: "68%", left: "40%", size: "6px", cls: "p-violet", delay: "0.5s", dur: "23s" },
+    { top: "68%", left: "40%", size: "6px", cls: "p-blue", delay: "0.5s", dur: "23s" },
     { top: "10%", left: "48%", size: "4px", cls: "p-cyan", delay: "4.5s", dur: "15s" },
-    { top: "92%", left: "52%", size: "5px", cls: "p-violet", delay: "2s", dur: "20s" },
+    { top: "92%", left: "52%", size: "5px", cls: "p-blue", delay: "2s", dur: "20s" },
   ];
 
   return (
@@ -121,37 +121,49 @@ export default function VOEBgWatermark() {
       {/* Interactive Cursor Halo Spotlight */}
       <div ref={cursorHaloRef} className="voe-bg-cursor-halo" />
 
-      {/* 4 Multi-colored Glowing Ambient Orbs (Purple, Blue, Pink, Cyan) */}
-      <div className="voe-glow-orb orb-purple" />
-      <div className="voe-glow-orb orb-blue" />
-      <div className="voe-glow-orb orb-pink" />
-      <div className="voe-glow-orb orb-cyan" />
+      {/* Translucent Wave Layers / Blobs */}
+      <div className="voe-wave-blob blob-ice" />
+      <div className="voe-wave-blob blob-sky" />
+      <div className="voe-wave-blob blob-pink" />
+      <div className="voe-wave-blob blob-cyan" />
+      <div className="voe-wave-blob blob-rose" />
 
-      {/* Decorative Flowing Energy Curved Paths */}
+      {/* Decorative Flowing Energy Curved Paths (Water Waves) */}
       <svg className="voe-decorative-lines" viewBox="0 0 1440 900" fill="none" preserveAspectRatio="none">
         <path
           d="M-100,250 C300,100 600,450 1000,200 C1250,50 1400,300 1600,180"
           stroke="url(#line-grad-1)"
           strokeWidth="1.5"
           strokeDasharray="8 12"
-          opacity="0.45"
+          opacity="0.6"
         />
         <path
           d="M-50,650 C400,500 750,800 1150,550 C1350,420 1500,600 1650,520"
           stroke="url(#line-grad-2)"
           strokeWidth="1.5"
+          opacity="0.5"
+        />
+        <path
+          d="M-150,400 C200,600 500,200 900,450 C1200,600 1450,250 1700,350"
+          stroke="url(#line-grad-3)"
+          strokeWidth="1"
           opacity="0.4"
         />
         <defs>
           <linearGradient id="line-grad-1" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#7C3AED" stopOpacity="0.2" />
-            <stop offset="50%" stopColor="#0EA5E9" stopOpacity="0.6" />
-            <stop offset="100%" stopColor="#EC4899" stopOpacity="0.2" />
+            <stop offset="0%" stopColor="#8EDCFF" stopOpacity="0.4" />
+            <stop offset="50%" stopColor="#FFB6D9" stopOpacity="0.8" />
+            <stop offset="100%" stopColor="#DDF6FF" stopOpacity="0.4" />
           </linearGradient>
           <linearGradient id="line-grad-2" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#0EA5E9" stopOpacity="0.1" />
-            <stop offset="50%" stopColor="#7C3AED" stopOpacity="0.5" />
-            <stop offset="100%" stopColor="#06B6D4" stopOpacity="0.2" />
+            <stop offset="0%" stopColor="#FFD6EA" stopOpacity="0.3" />
+            <stop offset="50%" stopColor="#8EDCFF" stopOpacity="0.7" />
+            <stop offset="100%" stopColor="#B8F0FF" stopOpacity="0.3" />
+          </linearGradient>
+          <linearGradient id="line-grad-3" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#B8F0FF" stopOpacity="0.2" />
+            <stop offset="50%" stopColor="#FFD6EA" stopOpacity="0.5" />
+            <stop offset="100%" stopColor="#DDF6FF" stopOpacity="0.2" />
           </linearGradient>
         </defs>
       </svg>
@@ -162,10 +174,10 @@ export default function VOEBgWatermark() {
       {/* Atmospheric Ambient Mesh Glow */}
       <div ref={auraRef} className="voe-bg-watermark__aura" />
 
-      {/* Rotating Monogram Ring Layer */}
+      {/* Rotating Monogram Ring Layer (Water ripple ring) */}
       <div ref={ringRef} className="voe-bg-watermark__ring" />
 
-      {/* Floating Restrained Particle Field */}
+      {/* Floating Restrained Particle Field (Bubbles) */}
       <div className="voe-bg-particles">
         {particles.map((p, idx) => (
           <span

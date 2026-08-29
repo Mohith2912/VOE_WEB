@@ -1,5 +1,5 @@
 /* ============================================================
-   NAVBAR — FROSTED PEARL TRANSLUCENT APP BAR
+   NAVBAR — FROSTED LIQUID GLASS APP BAR
    ============================================================ */
 
 .navbar {
@@ -16,16 +16,15 @@
   padding: 0 44px;
   gap: 20px;
 
-  /* Frosted pearl glass */
-  background: rgba(248, 249, 253, 0.84);
+  /* Frosted liquid glass */
+  background: var(--bg-glass-nav);
   backdrop-filter: blur(28px) saturate(190%);
   -webkit-backdrop-filter: blur(28px) saturate(190%);
 
-  border-bottom: 1px solid rgba(203, 213, 225, 0.6);
+  border-bottom: 1.5px solid rgba(255,255,255,0.75);
   box-shadow:
-    inset 0 -1px 0 rgba(255, 255, 255, 0.85),
-    0 1px 3px rgba(15, 23, 42, 0.02),
-    0 10px 30px -8px rgba(15, 23, 42, 0.05);
+    inset 0 -1px 0 rgba(255,255,255,0.9),
+    0 4px 20px -8px rgba(139,92,246,0.15);
 
   z-index: 1000;
   transition:
@@ -49,14 +48,14 @@
   align-items: center;
   gap: 5px;
 
-  background: rgba(241, 244, 250, 0.85);
-  border: 1px solid rgba(203, 213, 225, 0.7);
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.9);
   border-radius: var(--radius-sm);
 
   cursor: pointer;
   z-index: 1100;
 
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 1);
   transition:
     background 0.22s var(--ease-spring),
     border-color 0.22s var(--ease-spring),
@@ -65,20 +64,21 @@
 }
 
 .menu-btn:hover {
-  background: rgba(237, 233, 254, 0.9);
-  border-color: rgba(109, 40, 217, 0.25);
-  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(142, 220, 255, 0.5);
+  transform: translateY(-2px);
   box-shadow:
-    0 4px 12px rgba(109, 40, 217, 0.12),
+    0 4px 14px rgba(142, 220, 255, 0.4),
     inset 0 1px 0 rgba(255, 255, 255, 1);
 }
 
 .menu-btn:active {
-  transform: translateY(0) scale(0.96);
+  transform: translateY(0) scale(0.92);
+  animation: liquid-bounce 0.4s var(--ease-spring);
 }
 
 .menu-btn:focus-visible {
-  outline: 2px solid var(--voe-purple-light);
+  outline: 2px solid var(--voe-sky-blue);
   outline-offset: 2px;
 }
 
@@ -86,17 +86,18 @@
   width: 20px;
   height: 2px;
 
-  background: var(--voe-purple);
+  background: var(--text-primary);
   border-radius: 2px;
 
   transition:
     transform 0.28s var(--ease-spring),
+    background 0.2s ease,
     opacity 0.2s ease,
     width 0.2s ease;
 }
 
 .menu-btn:hover span {
-  background: var(--voe-purple-light);
+  background: var(--voe-rose);
 }
 
 /* Hamburger → X */
@@ -123,7 +124,7 @@
   font-weight: 800;
   font-family: var(--font-display);
   letter-spacing: 3px;
-  color: var(--voe-purple);
+  color: var(--text-primary);
   background: transparent;
   border: none;
   padding: 0;
@@ -136,7 +137,7 @@
 }
 
 .navbar-logo:hover {
-  color: var(--voe-purple-light);
+  color: var(--voe-rose);
   transform: scale(1.03);
 }
 
@@ -148,7 +149,7 @@
 .menu-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(15, 23, 42, 0.4);
+  background: rgba(24, 53, 74, 0.3); /* Deep Text color alpha */
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   opacity: 0;
@@ -177,15 +178,15 @@
   height: 100vh;
   padding: 108px 40px 36px;
 
-  /* Frosted pearl & mist glass panel */
-  background: rgba(248, 249, 254, 0.95);
-  backdrop-filter: blur(36px) saturate(190%);
-  -webkit-backdrop-filter: blur(36px) saturate(190%);
+  /* Liquid Glass Panel */
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(40px) saturate(190%);
+  -webkit-backdrop-filter: blur(40px) saturate(190%);
 
-  border-left: 1px solid rgba(203, 213, 225, 0.7);
+  border-left: 1px solid rgba(255, 255, 255, 0.8);
   box-shadow:
-    -24px 0 64px -12px rgba(15, 23, 42, 0.14),
-    -1px 0 0 rgba(255, 255, 255, 0.95);
+    -24px 0 64px -12px rgba(142, 220, 255, 0.25),
+    -1px 0 0 rgba(255, 255, 255, 1);
 
   z-index: 1050;
   transition: right 0.45s var(--ease-spring);
@@ -216,9 +217,10 @@
 }
 
 .menu-line {
-  height: 1px;
+  height: 2px;
   flex: 1;
-  background: linear-gradient(90deg, rgba(109, 40, 217, 0.3), transparent);
+  background: var(--grad-primary);
+  opacity: 0.6;
 }
 
 
@@ -255,20 +257,20 @@
 
 .menu-item:hover {
   padding-left: 22px;
-  background: rgba(255, 255, 255, 0.9);
-  border-color: rgba(109, 40, 217, 0.16);
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(142, 220, 255, 0.4);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 1),
-    0 3px 10px rgba(109, 40, 217, 0.06);
+    0 4px 12px rgba(255, 182, 217, 0.15);
 }
 
 .menu-item:active {
-  background: rgba(237, 233, 254, 0.95);
-  transform: scale(0.99);
+  background: var(--voe-ice-blue);
+  transform: scale(0.97);
 }
 
 .menu-item:focus-visible {
-  outline: 2px solid var(--voe-purple-light);
+  outline: 2px solid var(--voe-sky-blue);
   outline-offset: -2px;
 }
 
@@ -301,9 +303,9 @@
     transform 0.25s var(--ease-spring);
 }
 
-.menu-item:hover .menu-number { color: var(--voe-purple); }
-.menu-item:hover .menu-name   { color: var(--voe-purple); }
-.menu-item:hover .menu-arrow  { color: var(--voe-purple); transform: translate(4px, -4px); }
+.menu-item:hover .menu-number { color: var(--voe-rose); }
+.menu-item:hover .menu-name   { color: var(--text-primary); }
+.menu-item:hover .menu-arrow  { color: var(--voe-rose); transform: translate(4px, -4px); }
 
 
 /* ============================================================
@@ -315,7 +317,7 @@
   display: flex;
   justify-content: space-between;
   padding-top: 18px;
-  border-top: 1px solid rgba(203, 213, 225, 0.6);
+  border-top: 1px solid rgba(142, 220, 255, 0.3);
   font-size: 9.5px;
   font-family: var(--font-display);
   font-weight: 700;
@@ -359,7 +361,7 @@
   object-fit: contain;
   cursor: pointer;
   opacity: 0.9;
-  filter: drop-shadow(0 1px 2px rgba(15, 23, 42, 0.04));
+  filter: drop-shadow(0 2px 6px rgba(142, 220, 255, 0.4));
   transition:
     opacity 0.22s var(--ease-spring),
     transform 0.22s var(--ease-spring);
@@ -368,11 +370,11 @@
 
 .navbar-eec-logo:hover {
   opacity: 1;
-  transform: scale(1.03);
+  transform: scale(1.04) translateY(-1px);
 }
 
 .navbar-eec-logo:focus-visible {
-  outline: 2px solid var(--voe-purple-light);
+  outline: 2px solid var(--voe-sky-blue);
   outline-offset: 3px;
   border-radius: 4px;
 }

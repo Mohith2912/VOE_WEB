@@ -18,7 +18,6 @@ function Navbar({ setActivePage }) {
 
   const handleNavigation = (page) => {
     console.log("Clicked:", page);
-
     setActivePage(page);
     setMenuOpen(false);
   };
@@ -28,14 +27,14 @@ function Navbar({ setActivePage }) {
       <nav className="navbar">
 
         <button
-          className={`menu-btn ${menuOpen ? "active" : ""}`}
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="Toggle navigation"
-        >
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
+            className={`menu-btn ${menuOpen ? "active" : ""}`}
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle navigation"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
 
         <div className="navbar-brand-group">
           <VOEContinuousLogo onClick={() => handleNavigation("home")} />
