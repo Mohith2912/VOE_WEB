@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 import Navbar from "./assets/components/Navbar.jsx";
 import Hero from "./assets/components/Hero.jsx";
@@ -19,6 +19,12 @@ function App() {
         window.matchMedia("(prefers-reduced-motion: reduce)").matches)
     );
   });
+  const [siteVisible, setSiteVisible] = useState(introFinished);
+  const revealSite = useCallback(() => setSiteVisible(true), []);
+  const completeIntro = useCallback(() => {
+    setSiteVisible(true);
+    setIntroFinished(true);
+  }, []);
 
   // Scroll to top whenever a new page is selected
   useEffect(() => {
@@ -29,19 +35,25 @@ function App() {
     });
   }, [activePage]);
 
+  useEffect(() => {
+    if (introFinished) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = previousOverflow; };
+  }, [introFinished]);
+
   return (
     <>
       {/* Standalone Consecutive Master Intro */}
       {!introFinished && (
-        <GlobalLogos onComplete={() => setIntroFinished(true)} />
+        <GlobalLogos onReveal={revealSite} onComplete={completeIntro} />
       )}
 
       {/* Main Website Theme & Pages (Revealed Consecutively After Intro) */}
+      {siteVisible && (
       <div
         className="main-site-wrapper"
         style={{
-          opacity: introFinished ? 1 : 0,
-          transition: "opacity 0.6s ease-in-out",
           pointerEvents: introFinished ? "auto" : "none",
         }}
       >
@@ -141,6 +153,7 @@ function App() {
         {/* ================= FOOTER ================= */}
         <Footer setActivePage={setActivePage} />
       </div>
+      )}
     </>
   );
 }

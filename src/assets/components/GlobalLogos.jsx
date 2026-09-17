@@ -7,12 +7,26 @@ import eecLogoImg from "../eec-logo.png";
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-export default function GlobalLogos({ onComplete }) {
+const preloadImage = (src) => {
+  const image = new Image();
+  if (image.decode) {
+    image.src = src;
+    return image.decode();
+  }
+  return new Promise((resolve, reject) => {
+    image.onload = resolve;
+    image.onerror = reject;
+    image.src = src;
+  });
+};
+
+export default function GlobalLogos({ onReveal, onComplete }) {
   const overlayRef = useRef(null);
   const canvasRef = useRef(null);
 
   // States
   const [isPlaying, setIsPlaying] = useState(false);
+  const [assetsReady, setAssetsReady] = useState(false);
   const [overlayFading, setOverlayFading] = useState(false);
   const [showAuras, setShowAuras] = useState(false);
   const [showShock, setShowShock] = useState(false);
@@ -58,15 +72,26 @@ export default function GlobalLogos({ onComplete }) {
 
   // Check sessionStorage and prefers-reduced-motion on mount
   useEffect(() => {
+    let cancelled = false;
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const hasPlayed = sessionStorage.getItem("voeEecIntroPlayed");
 
     if (prefersReduced || hasPlayed === "true") {
-      setIsPlaying(false);
       if (onComplete) onComplete();
     } else {
-      setIsPlaying(true);
+      Promise.all([preloadImage(voeLogoImg), preloadImage(eecLogoImg)])
+        .then(() => {
+          if (!cancelled) {
+            setAssetsReady(true);
+            setIsPlaying(true);
+          }
+        })
+        .catch(() => {
+          // A failed image should never trap the visitor behind the intro.
+          if (!cancelled && onComplete) onComplete();
+        });
     }
+    return () => { cancelled = true; };
   }, [onComplete]);
 
   // Canvas Particle Physics Engine (Ultra-Energetic Fire, Water, Sparks)
@@ -93,7 +118,7 @@ export default function GlobalLogos({ onComplete }) {
     window.addEventListener("resize", handleResize);
 
     const particles = [];
-    const maxParticles = 250;
+    const maxParticles = width <= 768 ? 55 : 110;
 
     class Particle {
       constructor() {
@@ -172,7 +197,7 @@ export default function GlobalLogos({ onComplete }) {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fillStyle = `${this.color} ${Math.max(0, this.life)})`;
-        ctx.shadowBlur = this.type === "fire" ? 14 : this.type === "water" ? 10 : 16;
+        ctx.shadowBlur = this.type === "ambient" ? 0 : 8;
         ctx.shadowColor =
           this.type === "fire" ? "#ff5500" : this.type === "water" ? "#00ddff" : "#b026ff";
         ctx.fill();
@@ -214,6 +239,10 @@ export default function GlobalLogos({ onComplete }) {
         await sleep(ms);
         if (!isMounted) throw new Error("Aborted");
       };
+      const nextFrame = async () => {
+        await new Promise((resolve) => requestAnimationFrame(resolve));
+        if (!isMounted) throw new Error("Aborted");
+      };
 
       try {
         const isMobile = window.innerWidth <= 768;
@@ -224,7 +253,7 @@ export default function GlobalLogos({ onComplete }) {
         const voeHeroTargetX = isMobile ? 0 : Math.min(window.innerWidth * 0.25, 340);
         const voeHeroTargetY = isMobile ? -30 : 20;
 
-        // [0.0 - 0.5s] ACT I: Dark Atmospheric Start & Dual Materialization
+        // ACT I: Atmospheric start and dual materialization
         particleModeRef.current = "ambient";
         cameraAnim.set({ scale: 1, z: 0 });
         orbitHubAnim.set({ rotateY: 0, rotateX: 18 });
@@ -234,52 +263,47 @@ export default function GlobalLogos({ onComplete }) {
 
         await delay(500);
 
-        // [0.5 - 1.2s] VOE + EEC Materialize at Center with radiant glow
-        voeAnim.start({
+        // VOE and EEC materialize at center with radiant glow
+        await Promise.all([voeAnim.start({
           scale: 1,
           opacity: 1,
           rotateY: 0,
           filter: "blur(0px) drop-shadow(0 0 35px rgba(193, 92, 255, 0.95))",
           transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] },
-        });
-        eecAnim.start({
+        }), eecAnim.start({
           scale: 1,
           opacity: 1,
           rotateY: 0,
           filter: "blur(0px) drop-shadow(0 0 35px rgba(0, 229, 255, 0.95))",
           transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] },
-        });
+        }), delay(700)]);
+        if (!isMounted) return;
 
-        await delay(700);
-
-        // [1.2 - 2.8s] Dual 3D 720° Orbital Revolution around center
+        // Dual 3D orbital revolution around center
         particleModeRef.current = "orbit";
-        orbitHubAnim.start({
+        await Promise.all([orbitHubAnim.start({
           rotateY: 720,
           transition: { duration: 1.6, ease: "easeInOut" },
-        });
-        voeAnim.start({
+        }), voeAnim.start({
           z: [0, 90, 0, -90, 0],
           scale: [1, 1.2, 1, 0.85, 1],
           transition: { duration: 1.6, ease: "easeInOut" },
-        });
-        eecAnim.start({
+        }), eecAnim.start({
           z: [0, -90, 0, 90, 0],
           scale: [1, 0.85, 1, 1.2, 1],
           transition: { duration: 1.6, ease: "easeInOut" },
-        });
+        }), delay(1600)]);
+        if (!isMounted) return;
 
-        await delay(1600);
-
-        // [2.8 - 3.8s] ACT II: EEC GLIDES TO TOP LEFT (Navbar position)
-        eecAnim.start({
+        // ACT II: EEC glides to the navbar position
+        await Promise.all([eecAnim.start({
           x: eecTargetX + 55,
           y: eecTargetY,
           scale: 0.38,
           opacity: 0.95,
           filter: "drop-shadow(0 0 6px rgba(0,229,255,0.4))",
           transition: { duration: 1.0, ease: [0.25, 1, 0.5, 1] },
-        });
+        }),
 
         // VOE centers in the MIDDLE of the main theme for the 3D spin & burst
         voeAnim.start({
@@ -288,39 +312,37 @@ export default function GlobalLogos({ onComplete }) {
           scale: 1.3,
           rotateY: 360,
           transition: { duration: 1.0, ease: "easeInOut" },
-        });
+        }), delay(1000)]);
+        if (!isMounted) return;
 
         particleCenterRef.current = {
           x: window.innerWidth / 2,
           y: window.innerHeight / 2,
         };
 
-        await delay(1000);
-
-        // [3.8 - 4.6s] ACT III: ELECTROID & FLAMY VISUAL AURA IGNITION AT THE CENTER
+        // ACT III: elemental aura ignition at the center
         setShowAuras(true);
-        cameraAnim.start({
+        await Promise.all([cameraAnim.start({
           scale: [1, 1.15, 1.08],
           transition: { duration: 0.8, ease: "easeInOut" },
-        });
+        }), delay(800)]);
+        if (!isMounted) return;
 
-        await delay(800);
-
-        // [4.6 - 4.9s] Pre-Burst Energy Charging, Flash & Shockwave at Center
+        // Pre-burst energy charge, flash, and shockwave
         setShowShock(true);
-        flashAnim.start({
+        await Promise.all([flashAnim.start({
           opacity: [0, 1, 0],
           transition: { duration: 0.22, ease: "easeOut" },
-        });
+        }), delay(220)]);
+        if (!isMounted) return;
 
-        await delay(150);
-
-        // [4.9 - 6.4s] ACT IV: BURST THE LOGO INTO MULTIPLE PIECES AT THE CENTER
+        // ACT IV: burst the logo into multiple pieces
         setIsDismantled(true);
         particleModeRef.current = "burst";
+        await nextFrame();
 
         // Scatter 25 fragments in 3D perspective with flame wisps and electric sparks
-        fragmentAnim.start((i) => {
+        await Promise.all([fragmentAnim.start((i) => {
           const f = fragments[i];
           return {
             x: f.burstX,
@@ -330,20 +352,18 @@ export default function GlobalLogos({ onComplete }) {
             rotateZ: f.rotZ,
             scale: f.scale,
             opacity: [1, 1],
-            filter: "brightness(1.35) drop-shadow(0 0 22px rgba(109, 231, 255, 1)) drop-shadow(0 0 45px rgba(255, 100, 0, 0.85))",
             transition: { duration: 1.4, ease: [0.18, 0.75, 0.22, 1] },
           };
-        });
+        }), delay(1400)]);
+        if (!isMounted) return;
 
-        await delay(1400);
-
-        // [6.4 - 6.8s] Maximum Dispersion Suspended Pause & Gravity Inversion
+        // Maximum dispersion pause and gravity inversion
         particleModeRef.current = "collapse";
         await delay(400);
 
-        // [6.8 - 8.1s] ACT V: RECOMBINE THE BURSTED LOGO AS ONE PIECE WITH ELECTROID & FLAMY VISUALS
+        // ACT V: recombine the logo with elemental effects
         // All 25 fragments magnetically spiral back into one solid piece at the center
-        fragmentAnim.start({
+        await Promise.all([fragmentAnim.start({
           x: 0,
           y: 0,
           z: 0,
@@ -351,13 +371,11 @@ export default function GlobalLogos({ onComplete }) {
           rotateZ: 0,
           scale: 1,
           opacity: 1,
-          filter: "brightness(1.5) drop-shadow(0 0 50px rgba(143, 238, 255, 1)) drop-shadow(0 0 60px rgba(255, 120, 0, 0.9))",
           transition: { duration: 1.2, ease: [0.16, 1, 0.3, 1] },
-        });
+        }), delay(1200)]);
+        if (!isMounted) return;
 
-        await delay(1200);
-
-        // [8.1 - 8.7s] Recombination Snap as One Solid Piece at the Center
+        // Recombination snap as one solid piece
         setIsDismantled(false);
         setShowShock(false);
         particleModeRef.current = "none";
@@ -377,36 +395,36 @@ export default function GlobalLogos({ onComplete }) {
 
         await delay(600);
 
-        // [8.7 - 9.8s] ACT VI: RECOMBINED VOE MOVES FROM CENTER TO RIGHT SIDE OF HOME PAGE
+        // ACT VI: move the recombined VOE logo to its homepage position
         setShowAuras(false);
-        voeAnim.start({
+        await Promise.all([voeAnim.start({
           x: voeHeroTargetX,
           y: voeHeroTargetY,
           scale: 1.2,
           opacity: 1,
           filter: "drop-shadow(0 0 35px rgba(193, 92, 255, 0.9))",
           transition: { duration: 1.1, ease: [0.25, 1, 0.5, 1] },
-        });
-        cameraAnim.start({
+        }), cameraAnim.start({
           scale: 1,
           transition: { duration: 1.1, ease: "easeInOut" },
-        });
+        }), delay(1100)]);
+        if (!isMounted) return;
 
-        await delay(1100);
-
-        // [9.8 - 10.3s] ACT VII: Final Radiant Light Sweep Across Viewport
+        // ACT VII: final radiant light sweep across the viewport
         setShowLightSweep(true);
-        await delay(500);
+        if (onReveal) onReveal();
+        await delay(750);
 
-        // [10.3 - 10.8s] Seamless Transition into the Home Page
+        // Seamless transition into the homepage
         setOverlayFading(true);
-        await delay(450);
+        await delay(850);
 
         sessionStorage.setItem("voeEecIntroPlayed", "true");
         setIsPlaying(false);
         if (onComplete) onComplete();
       } catch {
-        // Handled abort on unmount
+        // Unmounts abort silently; unexpected errors reveal the site instead of trapping visitors.
+        if (isMounted && onComplete) onComplete();
       }
     };
 
@@ -415,9 +433,15 @@ export default function GlobalLogos({ onComplete }) {
     return () => {
       isMounted = false;
     };
-  }, [isPlaying, cameraAnim, orbitHubAnim, voeAnim, eecAnim, flashAnim, fragmentAnim, fragments, onComplete]);
+  }, [isPlaying, cameraAnim, orbitHubAnim, voeAnim, eecAnim, flashAnim, fragmentAnim, fragments, onReveal, onComplete]);
 
-  if (!isPlaying) return null;
+  if (!isPlaying) {
+    return assetsReady ? null : (
+      <div className="global-cinematic-overlay cinematic-loading" aria-live="polite">
+        <span>Preparing the VOE experience…</span>
+      </div>
+    );
+  }
 
   return (
     <div
@@ -455,26 +479,23 @@ export default function GlobalLogos({ onComplete }) {
               </div>
             )}
 
-            {!isDismantled ? (
-              <img src={voeLogoImg} alt="Voice of Easwarians" className="cinematic-voe-img" />
-            ) : (
-              <div className="voe-dismantle-stage">
-                {fragments.map((f, i) => (
-                  <motion.div
-                    key={f.id}
-                    custom={i}
-                    animate={fragmentAnim}
-                    className="voe-dismantle-tile"
-                    style={{
-                      left: f.left,
-                      top: f.top,
-                      backgroundImage: `url(${voeLogoImg})`,
-                      backgroundPosition: `${f.bgX} ${f.bgY}`,
-                    }}
-                  />
-                ))}
-              </div>
-            )}
+            <img src={voeLogoImg} alt="Voice of Easwarians" className="cinematic-voe-img" style={{ opacity: isDismantled ? 0 : 1 }} />
+            <div className="voe-dismantle-stage" style={{ opacity: isDismantled ? 1 : 0 }}>
+              {fragments.map((f, i) => (
+                <motion.div
+                  key={f.id}
+                  custom={i}
+                  animate={fragmentAnim}
+                  className="voe-dismantle-tile"
+                  style={{
+                    left: f.left,
+                    top: f.top,
+                    backgroundImage: `url(${voeLogoImg})`,
+                    backgroundPosition: `${f.bgX} ${f.bgY}`,
+                  }}
+                />
+              ))}
+            </div>
           </motion.div>
 
           {/* EEC Institutional Logo Card at Top Left */}

@@ -23,6 +23,13 @@
   opacity: 0;
 }
 
+.cinematic-loading span {
+  color: #4C1D95;
+  font: 700 14px/1.4 var(--font-display, sans-serif);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
 /* Atmospheric Expanding Rings */
 .cinematic-atmosphere {
   position: absolute;
@@ -85,7 +92,7 @@
   align-items: center;
   justify-content: center;
   transform-style: preserve-3d;
-  will-change: transform, opacity, filter;
+  will-change: transform, opacity;
 }
 
 /* VOE Emblem Image */
@@ -105,7 +112,6 @@
   max-width: 85vw;
   padding: 10px 18px;
   background: linear-gradient(135deg, rgba(24, 25, 58, 0.96), rgba(49, 29, 78, 0.94));
-  backdrop-filter: blur(20px);
   border: 1px solid rgba(214, 195, 255, 0.72);
   border-radius: 12px;
   box-shadow:
@@ -161,13 +167,13 @@
     rgba(255, 182, 217, 1) 330deg,
     transparent 360deg
   );
-  filter: blur(10px) drop-shadow(0 0 35px rgba(255, 182, 217, 0.8)) drop-shadow(0 0 60px rgba(255, 214, 234, 0.6));
+  filter: blur(10px) drop-shadow(0 0 28px rgba(255, 182, 217, 0.7));
   animation: masterFireSpin 3.8s ease-in-out infinite;
 }
 
 @keyframes masterFireSpin {
   0% { transform: rotate(-45deg) scale(0.85); opacity: 0.7; }
-  50% { transform: rotate(335deg) scale(1.2); opacity: 1; filter: blur(12px) brightness(1.2); }
+  50% { transform: rotate(335deg) scale(1.2); opacity: 1; }
   100% { transform: rotate(660deg) scale(0.85); opacity: 0.7; }
 }
 
@@ -191,13 +197,13 @@
     transparent 290deg 330deg,
     rgba(142, 220, 255, 0.9) 350deg
   );
-  filter: blur(8px) drop-shadow(0 0 30px rgba(142, 220, 255, 0.8)) drop-shadow(0 0 60px rgba(184, 240, 255, 0.6));
+  filter: blur(8px) drop-shadow(0 0 28px rgba(142, 220, 255, 0.75));
   animation: masterWaterSpin 3.8s ease-in-out infinite;
 }
 
 @keyframes masterWaterSpin {
   0% { transform: rotate(38deg) scale(0.85); opacity: 0.7; }
-  50% { transform: rotate(-326deg) scale(1.2); opacity: 1; filter: blur(10px) brightness(1.2); }
+  50% { transform: rotate(-326deg) scale(1.2); opacity: 1; }
   100% { transform: rotate(-644deg) scale(0.85); opacity: 0.7; }
 }
 
@@ -279,8 +285,9 @@
   height: 20%;
   background-repeat: no-repeat;
   background-size: 500% 500%;
-  will-change: transform, opacity, filter;
+  will-change: transform, opacity;
   border-radius: 4px;
+  box-shadow: 0 0 14px rgba(109, 231, 255, 0.75), 0 0 22px rgba(255, 130, 72, 0.42);
 }
 
 /* Flash Overlay */
