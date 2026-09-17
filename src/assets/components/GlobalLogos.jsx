@@ -70,13 +70,12 @@ export default function GlobalLogos({ onReveal, onComplete }) {
   const particleModeRef = useRef("ambient");
   const particleCenterRef = useRef({ x: 0, y: 0 });
 
-  // Check sessionStorage and prefers-reduced-motion on mount
+  // Prepare both logos before starting the timeline.
   useEffect(() => {
     let cancelled = false;
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const hasPlayed = sessionStorage.getItem("voeEecIntroPlayed");
 
-    if (prefersReduced || hasPlayed === "true") {
+    if (prefersReduced) {
       if (onComplete) onComplete();
     } else {
       Promise.all([preloadImage(voeLogoImg), preloadImage(eecLogoImg)])
@@ -419,7 +418,6 @@ export default function GlobalLogos({ onReveal, onComplete }) {
         setOverlayFading(true);
         await delay(850);
 
-        sessionStorage.setItem("voeEecIntroPlayed", "true");
         setIsPlaying(false);
         if (onComplete) onComplete();
       } catch {

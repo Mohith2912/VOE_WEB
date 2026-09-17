@@ -15,8 +15,7 @@ function App() {
   const [introFinished, setIntroFinished] = useState(() => {
     return (
       typeof window !== "undefined" &&
-      (sessionStorage.getItem("voeEecIntroPlayed") === "true" ||
-        window.matchMedia("(prefers-reduced-motion: reduce)").matches)
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
     );
   });
   const [siteVisible, setSiteVisible] = useState(introFinished);
