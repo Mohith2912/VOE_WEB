@@ -23,6 +23,8 @@ const preloadImage = (src) => {
 export default function GlobalLogos({ onReveal, onComplete }) {
   const overlayRef = useRef(null);
   const canvasRef = useRef(null);
+  const eecDestinationRef = useRef(null);
+  const eecImageRef = useRef(null);
 
   // States
   const [isPlaying, setIsPlaying] = useState(false);
@@ -245,8 +247,6 @@ export default function GlobalLogos({ onReveal, onComplete }) {
 
       try {
         const isMobile = window.innerWidth <= 768;
-        const eecTargetX = -window.innerWidth / 2 + (isMobile ? 80 : 140);
-        const eecTargetY = -window.innerHeight / 2 + 40;
 
         // Position on the RIGHT side of the home page (matching .hero-logo-stage)
         const voeHeroTargetX = isMobile ? 0 : Math.min(window.innerWidth * 0.25, 340);
@@ -295,12 +295,18 @@ export default function GlobalLogos({ onReveal, onComplete }) {
         if (!isMounted) return;
 
         // ACT II: EEC glides to the navbar position
+        // Share the navbar's responsive dimensions, even before the site is revealed.
+        const eecDestination = eecDestinationRef.current.getBoundingClientRect();
         await Promise.all([eecAnim.start({
-          x: eecTargetX + 55,
-          y: eecTargetY,
-          scale: 0.38,
+          x: eecDestination.left + eecDestination.width / 2 - window.innerWidth / 2,
+          y: eecDestination.top + eecDestination.height / 2 - window.innerHeight / 2,
+          scale: eecDestination.width / eecImageRef.current.offsetWidth,
           opacity: 0.95,
           filter: "drop-shadow(0 0 6px rgba(0,229,255,0.4))",
+          transition: { duration: 1.0, ease: [0.25, 1, 0.5, 1] },
+        }),
+        orbitHubAnim.start({
+          rotateX: 0,
           transition: { duration: 1.0, ease: [0.25, 1, 0.5, 1] },
         }),
 
@@ -447,6 +453,7 @@ export default function GlobalLogos({ onReveal, onComplete }) {
       className={`global-cinematic-overlay ${overlayFading ? "fade-out" : ""}`}
       aria-hidden="true"
     >
+      <div ref={eecDestinationRef} className="cinematic-eec-destination" />
       {/* Expanding Atmospheric Rings */}
       <div className="cinematic-atmosphere" />
 
@@ -463,10 +470,12 @@ export default function GlobalLogos({ onReveal, onComplete }) {
       <div className={`cinematic-light-sweep ${showLightSweep ? "animate-sweep" : ""}`} />
 
       {/* 3D Camera Stage */}
-      <motion.div className="cinematic-camera-stage" animate={cameraAnim}>
+      <div className="cinematic-camera-stage">
         {/* 3D Orbit Hub */}
         <motion.div className="cinematic-orbit-hub" animate={orbitHubAnim}>
           {/* VOE Logo: 3D Rotate & Burst at Center -> Recombines as One Piece -> Moves to Right Side */}
+          {/* Keep the VOE camera zoom independent of the docked EEC logo. */}
+          <motion.div className="cinematic-node" animate={cameraAnim}>
           <motion.div className="cinematic-node" animate={voeAnim}>
             {/* Iconic Electroid & Flamy Visual Auras */}
             {showAuras && (
@@ -495,11 +504,13 @@ export default function GlobalLogos({ onReveal, onComplete }) {
               ))}
             </div>
           </motion.div>
+          </motion.div>
 
-          {/* EEC Institutional Logo Card at Top Left */}
+          {/* EEC Institutional Logo Card docks at the top right. */}
           <motion.div className="cinematic-node" animate={eecAnim}>
             <div className="cinematic-eec-card">
               <img
+                ref={eecImageRef}
                 src={eecLogoImg}
                 alt="Easwari Engineering College"
                 className="cinematic-eec-img"
@@ -507,7 +518,7 @@ export default function GlobalLogos({ onReveal, onComplete }) {
             </div>
           </motion.div>
         </motion.div>
-      </motion.div>
+      </div>
     </div>
   );
 }

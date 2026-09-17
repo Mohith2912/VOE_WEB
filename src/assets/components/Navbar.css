@@ -2,18 +2,24 @@
    NAVBAR — FROSTED LIQUID GLASS APP BAR
    ============================================================ */
 
+:root {
+  --navbar-height: 78px;
+  --navbar-inline-padding: 44px;
+  --navbar-eec-width: clamp(180px, 24vw, 200px);
+}
+
 .navbar {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 78px;
+  height: var(--navbar-height);
 
   display: flex;
   align-items: center;
   justify-content: flex-start;
 
-  padding: 0 44px;
+  padding: 0 var(--navbar-inline-padding);
   gap: 20px;
 
   /* Frosted liquid glass */
@@ -41,6 +47,7 @@
 .menu-btn {
   width: 44px;
   height: 44px;
+  flex-shrink: 0;
 
   display: flex;
   flex-direction: column;
@@ -331,7 +338,13 @@
    ============================================================ */
 
 @media (max-width: 600px) {
-  .navbar { padding: 0 20px; height: 72px; }
+  :root {
+    --navbar-height: 72px;
+    --navbar-inline-padding: 12px;
+    --navbar-eec-width: clamp(132px, 42vw, 180px);
+  }
+
+  .navbar { gap: 12px; }
 
   .side-menu {
     width: 100%;
@@ -351,16 +364,19 @@
 .navbar-brand-group {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  flex: 1;
+  min-width: 0;
   gap: 16px;
 }
 
 .navbar-eec-logo {
-  height: 44px;
-  width: auto;
-  max-width: 200px;
+  display: block;
+  width: var(--navbar-eec-width);
+  height: auto;
   object-fit: contain;
   cursor: pointer;
-  opacity: 0.9;
+  opacity: 1;
   filter: drop-shadow(0 2px 6px rgba(142, 220, 255, 0.4));
   transition:
     opacity 0.22s var(--ease-spring),
@@ -379,10 +395,14 @@
   border-radius: 4px;
 }
 
-@media (max-width: 768px) {
-  .navbar-eec-logo { height: 36px; max-width: 150px; }
+@media (max-width: 600px) {
+  .navbar-brand-group { gap: 12px; }
 }
 
-@media (max-width: 480px) {
-  .navbar-eec-logo { height: 30px; max-width: 120px; }
+@media (max-width: 360px) {
+  .navbar-brand-group .voe-continuous-wrapper { gap: 7px; }
+  .navbar-brand-group .voe-continuous-text {
+    font-size: 18px;
+    letter-spacing: 2px;
+  }
 }

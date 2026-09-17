@@ -107,6 +107,16 @@
 }
 
 /* EEC Institutional Logo Card */
+.cinematic-eec-destination {
+  position: absolute;
+  top: 0;
+  right: var(--navbar-inline-padding);
+  width: var(--navbar-eec-width);
+  height: var(--navbar-height);
+  visibility: hidden;
+  pointer-events: none;
+}
+
 .cinematic-eec-card {
   width: 320px;
   max-width: 85vw;
