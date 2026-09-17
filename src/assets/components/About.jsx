@@ -70,13 +70,19 @@ function About() {
             <div className="card-icon">{card.icon}</div>
             <h2>{card.title}</h2>
             <p>{card.desc}</p>
-            <button className="card-arrow" aria-label={`Learn more about ${card.title}`}>→</button>
+            <button
+              className="card-arrow"
+              aria-label={`Explore VOE activities related to ${card.title}`}
+              onClick={() => document.getElementById("about-activities")?.scrollIntoView({ behavior: "smooth" })}
+            >
+              →
+            </button>
           </div>
         ))}
       </div>
 
       {/* ========================= WHAT WE DO ========================= */}
-      <div className="about-activities">
+      <div className="about-activities" id="about-activities">
         <div className="activities-heading">
           <p>WHAT WE DO</p>
           <h2>

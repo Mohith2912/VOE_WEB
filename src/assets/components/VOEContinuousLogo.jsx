@@ -342,7 +342,7 @@ export default function VOEContinuousLogo({ onClick }) {
           await delay(500);
           // Seamlessly loops to next cycle
         }
-      } catch (err) {
+      } catch {
         // Abort handled cleanly on unmount
       }
     };

@@ -1,6 +1,22 @@
+import { useState } from "react";
 import "./Contact.css";
 
 function Contact() {
+  const [formNotice, setFormNotice] = useState("");
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const name = String(formData.get("name") || "").trim();
+    const email = String(formData.get("email") || "").trim();
+    const subject = String(formData.get("subject") || "").trim();
+    const message = String(formData.get("message") || "").trim();
+    const body = `From: ${name} (${email})\n\n${message}`;
+
+    window.location.href = `mailto:voe@easwari.ac.in?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    setFormNotice("An email draft should open in your mail app. Please send it there. If it does not open, email voe@easwari.ac.in directly.");
+  };
+
   return (
     <section className="contact-page">
 
@@ -64,7 +80,10 @@ function Contact() {
 
           <h2>SEND US A MESSAGE</h2>
 
-          <form className="contact-form">
+          <form
+            className="contact-form"
+            onSubmit={handleSubmit}
+          >
 
             <div className="form-group">
               <label htmlFor="name">NAME</label>
@@ -72,7 +91,9 @@ function Contact() {
               <input
                 type="text"
                 id="name"
+                name="name"
                 placeholder="Your name"
+                required
               />
             </div>
 
@@ -83,7 +104,9 @@ function Contact() {
               <input
                 type="email"
                 id="email"
+                name="email"
                 placeholder="Your email"
+                required
               />
             </div>
 
@@ -94,7 +117,9 @@ function Contact() {
               <input
                 type="text"
                 id="subject"
+                name="subject"
                 placeholder="What is this regarding?"
+                required
               />
             </div>
 
@@ -104,15 +129,19 @@ function Contact() {
 
               <textarea
                 id="message"
+                name="message"
                 rows="5"
                 placeholder="Tell us what's on your mind..."
+                required
               ></textarea>
             </div>
 
 
             <button type="submit" className="contact-submit">
-              SEND MESSAGE ↗
+              OPEN EMAIL DRAFT ↗
             </button>
+
+            {formNotice && <p className="contact-form-notice" role="status">{formNotice}</p>}
 
           </form>
 

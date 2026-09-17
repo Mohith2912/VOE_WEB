@@ -91,8 +91,8 @@ function App() {
                 boxShadow: "inset 0 1px 0 rgba(255, 255, 255, 1), 0 16px 44px -8px rgba(15, 23, 42, 0.06)",
               }}
             >
-              <h1 style={{ fontFamily: "var(--font-display)", fontSize: "40px", fontWeight: "800", color: "var(--text-primary)", marginBottom: "12px", letterSpacing: "-0.5px" }}>GALLERY</h1>
-              <p style={{ color: "var(--text-secondary)", fontSize: "16px", lineHeight: "1.7" }}>Curated VOE media, exhibits, and visual archives will appear here.</p>
+              <h1 style={{ fontFamily: "var(--font-display)", fontSize: "40px", fontWeight: "800", color: "#4C1D95", marginBottom: "12px", letterSpacing: "-0.5px" }}>GALLERY</h1>
+              <p style={{ color: "#334155", fontSize: "16px", lineHeight: "1.7" }}>Curated VOE media, exhibits, and visual archives will appear here.</p>
             </div>
           </div>
         )}
@@ -129,8 +129,8 @@ function App() {
                 boxShadow: "inset 0 1px 0 rgba(255, 255, 255, 1), 0 16px 44px -8px rgba(15, 23, 42, 0.06)",
               }}
             >
-              <h1 style={{ fontFamily: "var(--font-display)", fontSize: "40px", fontWeight: "800", color: "var(--text-primary)", marginBottom: "12px", letterSpacing: "-0.5px" }}>EVENTS</h1>
-              <p style={{ color: "var(--text-secondary)", fontSize: "16px", lineHeight: "1.7" }}>Upcoming VOE workshops, speaker sessions, and hackathons will appear here.</p>
+              <h1 style={{ fontFamily: "var(--font-display)", fontSize: "40px", fontWeight: "800", color: "#4C1D95", marginBottom: "12px", letterSpacing: "-0.5px" }}>EVENTS</h1>
+              <p style={{ color: "#334155", fontSize: "16px", lineHeight: "1.7" }}>Upcoming VOE workshops, speaker sessions, and hackathons will appear here.</p>
             </div>
           </div>
         )}

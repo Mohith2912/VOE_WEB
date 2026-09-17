@@ -405,7 +405,7 @@ export default function GlobalLogos({ onComplete }) {
         sessionStorage.setItem("voeEecIntroPlayed", "true");
         setIsPlaying(false);
         if (onComplete) onComplete();
-      } catch (err) {
+      } catch {
         // Handled abort on unmount
       }
     };

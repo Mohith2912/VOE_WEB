@@ -84,7 +84,7 @@
 }
 
 .about-description strong {
-  color: var(--mystic-purple);
+  color: #E9D5FF;
   font-weight: 700;
 }
 
@@ -277,6 +277,7 @@
 .about-activities {
   max-width: 1200px;
   margin: 0 auto 110px;
+  scroll-margin-top: 100px;
 }
 
 .activities-heading {
@@ -452,7 +453,7 @@
   font-family: var(--font-display);
   font-weight: 800;
   line-height: 1.15;
-  color: var(--royal-fusion);
+  color: var(--text-primary);
 }
 
 .why-voe h2 span {

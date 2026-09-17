@@ -61,7 +61,8 @@
   margin-top: 14px;
   font-size: 16.5px;
   font-family: var(--font-body);
-  color: var(--text-secondary);
+  color: #F1F5F9;
+  text-shadow: 0 1px 8px rgba(15, 23, 42, 0.7);
 }
 
 /* ============================================================
@@ -235,7 +236,7 @@
 }
 
 .team-card summary:hover {
-  background: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .team-card summary::-webkit-details-marker {
@@ -270,7 +271,7 @@
 .team-card[open] summary b {
   transform: rotate(45deg);
   background: var(--voe-soft-pink);
-  color: #fff;
+  color: #4C1D95;
   border-color: var(--voe-rose);
 }
 
@@ -338,7 +339,7 @@
 
 .team-admin-card h3 {
   margin: 0 0 4px;
-  color: var(--text-primary);
+  color: #4C1D95;
   font-size: 14.5px;
   font-family: var(--font-display);
   font-weight: 700;
@@ -346,7 +347,7 @@
 
 .team-admin-card p {
   margin: 0;
-  color: var(--text-secondary);
+  color: #475569;
   font-size: 12px;
   font-family: var(--font-body);
   font-weight: 600;
@@ -402,14 +403,14 @@
   font-size: 14px;
   font-family: var(--font-display);
   font-weight: 600;
-  color: var(--text-primary);
+  color: #4C1D95;
 }
 
 .member-card p {
   margin: 0;
   font-size: 12px;
   font-family: var(--font-body);
-  color: var(--text-secondary);
+  color: #475569;
   font-weight: 500;
 }
 
