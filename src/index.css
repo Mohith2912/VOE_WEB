@@ -35,6 +35,31 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+/* Purple-black type system: a luminous violet hierarchy on dark surfaces,
+   plus an ink shadow so text stays legible over the animated atmosphere. */
+body,
+button,
+input,
+textarea {
+  color: var(--text-body);
+}
+
+.main-site-wrapper h1,
+.main-site-wrapper h2,
+.main-site-wrapper h3,
+.main-site-wrapper p,
+.main-site-wrapper li,
+.main-site-wrapper span {
+  text-shadow: 0 1px 12px rgba(4, 2, 10, 0.52);
+}
+
+.main-site-wrapper .gradient-heading,
+.main-site-wrapper .gradient-heading-pink,
+.main-site-wrapper h1 span,
+.main-site-wrapper h2 span {
+  text-shadow: none;
+}
+
 /* ============================================================
    DESIGN TOKENS
    ============================================================ */
@@ -58,8 +83,8 @@ body {
   --voe-cyan-subtle: rgba(184, 240, 255, 0.15);
 
   /* Heading Gradients — Blue to Purple to Pink */
-  --grad-heading:        linear-gradient(90deg, #3B82F6 0%, #8B5CF6 45%, #EC4899 100%);
-  --grad-heading-alt:    linear-gradient(90deg, #8B5CF6 0%, #EC4899 100%);
+  --grad-heading:        linear-gradient(90deg, #C4B5FD 0%, #A78BFA 46%, #F0ABFC 100%);
+  --grad-heading-alt:    linear-gradient(90deg, #D8B4FE 0%, #F0ABFC 100%);
   --grad-primary:        linear-gradient(135deg, #DDF6FF, #FFD6EA);
   --grad-secondary:      linear-gradient(135deg, #8EDCFF, #FFB6D9);
   --grad-accent:         linear-gradient(135deg, #B8F0FF, #FFE0EF);
@@ -92,11 +117,11 @@ body {
   --text-accent-light:    var(--royal-fusion);
   --text-body-light:      #1E293B;
 
-  --text-primary-dark:   #D8B4FE;
-  --text-secondary-dark: #C084FC;
-  --text-muted-dark:     #94A3B8;
-  --text-accent-dark:    #DDA0F5;
-  --text-body-dark:      #E2E8F0;
+  --text-primary-dark:   #E9D5FF;
+  --text-secondary-dark: #C4B5FD;
+  --text-muted-dark:     #C4B5D6;
+  --text-accent-dark:    #F0ABFC;
+  --text-body-dark:      #F3E8FF;
 
   /* Borders */
   --border-subtle:     rgba(255,255,255,0.75);
