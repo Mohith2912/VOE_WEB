@@ -7,7 +7,7 @@ import Team from "./assets/components/Team.jsx";
 import About from "./assets/components/About.jsx";
 import Contact from "./assets/components/Contact.jsx";
 import Footer from "./assets/components/Footer.jsx";
-import GlobalLogos from "./assets/components/GlobalLogos.jsx";
+import VideoIntro from "./assets/components/VideoIntro.jsx";
 import VOEBgWatermark from "./assets/components/VOEBgWatermark.jsx";
 
 function App() {
@@ -43,15 +43,16 @@ function App() {
 
   return (
     <>
-      {/* Standalone Consecutive Master Intro */}
+      {/* Cinematic emblem introduction */}
       {!introFinished && (
-        <GlobalLogos onReveal={revealSite} onComplete={completeIntro} />
+        <VideoIntro onReveal={revealSite} onComplete={completeIntro} />
       )}
 
       {/* Main Website Theme & Pages (Revealed Consecutively After Intro) */}
       {siteVisible && (
       <div
         className="main-site-wrapper"
+        inert={!introFinished}
         style={{
           pointerEvents: introFinished ? "auto" : "none",
         }}
