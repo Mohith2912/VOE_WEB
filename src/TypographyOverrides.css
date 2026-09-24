@@ -33,21 +33,9 @@
   opacity: 1;
 }
 
-/* A soft plum contrast field protects the hero title from the moving logo and
-   background light without introducing a visible card or frame. */
 .hero-content {
   position: relative;
   isolation: isolate;
-}
-
-.hero-content::before {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  inset: -54px -72px;
-  border-radius: 46%;
-  background: radial-gradient(ellipse at 42% 48%, rgba(16, 7, 28, 0.84) 0%, rgba(16, 7, 28, 0.48) 48%, transparent 76%);
-  filter: blur(14px);
 }
 
 .hero-title small,
