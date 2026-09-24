@@ -39,10 +39,12 @@ export default function VideoIntro({ onReveal, onComplete }) {
   return (
     <section className={`video-intro${exiting ? " video-intro--exiting" : ""}`}
       aria-label="VOE introduction">
+      <div className="video-intro__stage">
       <video ref={videoRef} className="video-intro__film" autoPlay muted playsInline
         preload="auto" poster={`${mediaBase}voe-intro-poster.webp`}
         src={`${mediaBase}voe-intro.mp4`} aria-hidden="true" tabIndex={-1}
         onPlaying={() => setPlaying(true)} onEnded={finish} onError={finish} />
+      </div>
       <div className="video-intro__caption" aria-hidden="true">
         <span>VOICE OF EASWARIANS</span>
         <small>YOUR VOICE. OUR CAMPUS.</small>
