@@ -50,10 +50,11 @@
   filter: blur(14px);
 }
 
+.hero-title small,
 .hero-title span {
   color: #F0DFFF !important;
   -webkit-text-fill-color: #F0DFFF !important;
-  text-shadow: 0 3px 18px rgba(5, 1, 10, 0.96), 0 0 2px rgba(255,255,255,0.22) !important;
+  text-shadow: none !important;
 }
 
 /* Keep the footer's original social palette. */
