@@ -9,6 +9,7 @@ import Contact from "./assets/components/Contact.jsx";
 import Footer from "./assets/components/Footer.jsx";
 import VideoIntro from "./assets/components/VideoIntro.jsx";
 import VOEBgWatermark from "./assets/components/VOEBgWatermark.jsx";
+import "./TypographyOverrides.css";
 
 function App() {
   const [activePage, setActivePage] = useState("home");

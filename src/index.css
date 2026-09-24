@@ -60,6 +60,44 @@ textarea {
   text-shadow: none;
 }
 
+/* One solid typography palette across every page. The existing blue and pink
+   gradients are intentionally neutralised so type never disappears into them. */
+.main-site-wrapper :is(h1, h2, h3, h4) {
+  color: #E9D5FF !important;
+  background: none !important;
+  -webkit-text-fill-color: #E9D5FF !important;
+}
+
+.main-site-wrapper :is(p, li, label, summary, .detail-label, .detail-value, .footer-slogan) {
+  color: #F3E8FF !important;
+}
+
+.main-site-wrapper :is(.section-label, .about-label, .contact-tag,
+  .primary-btn, .secondary-btn, .contact-submit, .arrow-btn,
+  .card-arrow, .footer-link-item, .footer-cta-btn) {
+  color: #2B123D !important;
+  text-shadow: none;
+}
+
+/* Light glass and white cards use ink-purple text, keeping 4.5:1-or-better
+   contrast instead of pale text on pale surfaces. */
+.side-menu :is(span, button),
+.team-admin-card :is(h3, p),
+.member-card :is(h3, p),
+.contact-form-container :is(h2, label, input, textarea, p),
+.contact-detail :is(span, p),
+.footer-link-item :is(span) {
+  color: #2B123D !important;
+  -webkit-text-fill-color: #2B123D !important;
+  text-shadow: none;
+}
+
+.main-site-wrapper input::placeholder,
+.main-site-wrapper textarea::placeholder {
+  color: #65456F;
+  opacity: 1;
+}
+
 /* ============================================================
    DESIGN TOKENS
    ============================================================ */

@@ -1,0 +1,34 @@
+/* Final type layer: loaded after component styles to keep every page on the
+   same violet-on-black / plum-on-light palette. */
+.main-site-wrapper :is(h1, h2, h3, h4, h1 span, h2 span, h3 span, h4 span) {
+  color: #E9D5FF !important;
+  background: none !important;
+  -webkit-text-fill-color: #E9D5FF !important;
+  text-shadow: 0 2px 14px rgba(3, 2, 10, 0.65) !important;
+}
+
+.main-site-wrapper :is(p, li, label, summary, .detail-label, .detail-value, .footer-slogan) {
+  color: #F3E8FF !important;
+  text-shadow: 0 2px 12px rgba(3, 2, 10, 0.62) !important;
+}
+
+/* Pale or white controls and cards receive dark plum type for clear contrast. */
+.main-site-wrapper :is(.hero-tag, .section-label, .about-label, .contact-tag,
+  .primary-btn, .secondary-btn, .contact-submit, .arrow-btn,
+  .card-arrow, .footer-link-item, .footer-cta-btn),
+.side-menu :is(span, button),
+.team-admin-card :is(h3, p),
+.member-card :is(h3, p),
+.contact-form-container :is(h2, label, input, textarea, p),
+.contact-detail :is(span, p),
+.footer-link-item :is(span) {
+  color: #2B123D !important;
+  -webkit-text-fill-color: #2B123D !important;
+  text-shadow: none !important;
+}
+
+.main-site-wrapper input::placeholder,
+.main-site-wrapper textarea::placeholder {
+  color: #65456F !important;
+  opacity: 1;
+}
